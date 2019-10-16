@@ -1,4 +1,4 @@
-from flask import Flask, request, jsonify
+from flask import Flask, request, jsonify, render_template
 import pickle
 import os
 import logging
@@ -21,9 +21,7 @@ for fn in os.listdir(basic_model_path):
     logger.info('Loading model: \'{0}\''.format(m.model_description))
     models.append(m)
 
-@app.route('/ch_pat_service',methods=['POST'])
-def main_service():
-    data = request.get_json(force=True)
+def call_models(data):
     logger.info('Input: {0}'.format(data))
     has_applicable_models = True
     model_application_flag = [False] * len(models)
@@ -36,7 +34,23 @@ def main_service():
                 logger.info('Applying mode: \'{0}\''.format(m.model_description))
                 data = m.apply(data)    
     logger.info('Output: {0}'.format(data))
+    return data
+
+@app.route('/ch_pat_service', methods=['POST', 'GET'])
+def main_service():
+    data = request.args.to_dict() if request.method == 'GET' else request.get_json(force=True)
+    data = call_models(data)
     return jsonify(data)
+
+@app.route('/ch_pat_service_ui', methods=['POST', 'GET'])
+def main_service_ui():
+    data = request.args.to_dict() if request.method == 'GET' else request.get_json(force=True)
+    data = call_models(data)
+    return render_template('resp_template.html', states=data['states'] if 'states' in data else [])
+
+@app.route('/')
+def main_ui():
+    return render_template('main_template.html', fields=[['icd10','МКБ-10'], ['max_sbp','САД (max)']])
 
 if __name__ == '__main__':
     app.run(port=5000, debug=True)

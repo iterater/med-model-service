@@ -1,0 +1,16 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>Request form</title>
+  </head>
+  <body>
+    <form method="get" action="/ch_pat_service_ui">
+      {% for f in fields %}
+      <label for="{{f[0]}}">{{f[1]}}</label>
+      <input name="{{f[0]}}" id="{{f[0]}}"/>
+      <br/>
+      {% endfor %}
+      <input type="submit" value="Go">
+    </form>
+  </body>
+</html>

@@ -1,0 +1,17 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>Results</title>
+    <link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='css/resp.css') }}" />
+  </head>
+  <body style="width: fit-content;">
+    {% for s in states %}
+    <div class="state">
+      <div class="block_type_label">состояние</div>
+      <div class="block_title">{{s["title"]}}</div>
+      <i>Значение:</i> {{s["value"]}}<br/>
+      <i>Комментарий:</i> {{s["comment"]}}
+    </div>
+    {% endfor %}
+  </body>
+</html>

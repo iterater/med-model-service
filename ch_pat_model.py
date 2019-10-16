@@ -36,7 +36,21 @@ class TestAHModel(ChPatModel):
         res_dict = patient_dict.copy()
         if 'states' not in res_dict:
             res_dict['states'] = []
-        if patient_dict['max_sbp'] > 140:
-            res_dict['states'].append({'title': 'AH State', 'value': '>140', 'comment': 'High blood pressure'})
+        if int(patient_dict['max_sbp']) > 140:
+            res_dict['states'].append({'title': 'Монитор давления', 'value': '>140', 'comment': 'Повышенное давление'})
         return res_dict
 
+class StubStateModel(ChPatModel):
+    '''Stub model. Works everywhere'''
+    def __init__(self):
+        self._model_description = 'Stub model'
+
+    def check_applicability(self, patient_dict):
+        return True
+
+    def apply(self, patient_dict):
+        res_dict = patient_dict.copy()
+        if 'states' not in res_dict:
+            res_dict['states'] = []
+        res_dict['states'].append({'title': 'Тест', 'value': 'ОК', 'comment': 'Тестовая модель отработала'})
+        return res_dict
