@@ -17,3 +17,9 @@ Killing flask process:
 ```bash
 killall flask
 ```
+
+# TODO
+* HTML/CSS template
+* Images in response
+* Model chains and dependencies
+* Dockerize
