@@ -11,6 +11,7 @@ ch.setFormatter(logging.Formatter('%(asctime)s - %(message)s'))
 logger.addHandler(ch)
 
 def load_models(basic_model_path):
+    '''Load pckled models from dir'''    
     models = []
     for fn in os.listdir(basic_model_path):
         m = pickle.load(open(os.path.join(basic_model_path, fn), 'br'))
@@ -20,6 +21,7 @@ def load_models(basic_model_path):
 
 
 def call_models(data, models):
+    '''Call available models'''
     logger.info('Input: {0}'.format(data))
     has_applicable_models = True
     model_application_flag = [False] * len(models)
@@ -35,4 +37,5 @@ def call_models(data, models):
     return data
 
 def params_list():
+    '''List of available parameters'''
     return [{'id':'icd10', 'label':'МКБ-10', 'default':'I10'}, {'id':'max_sbp', 'label':'САД (max)', 'default':'120'}]
