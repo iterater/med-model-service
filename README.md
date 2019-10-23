@@ -19,11 +19,9 @@ killall flask
 ```
 
 # TODO
-* HTML/CSS template
 * Images in response
 * Model chains and dependencies
 * Dockerize
 * Топологическая сортировка + один проход по моделям
 * Цепочка обязанностей? 
-* Добавить `@abstractmethod`
 
