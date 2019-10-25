@@ -1,17 +1,5 @@
-from enum import Enum
 import ThromboembolicComplications.const as const
 import re
-
-
-class RiskFactor(Enum):
-    STROKE = 1
-    AGE_75_MORE = 2
-    ARTERIAL_HYPERTENSION = 3
-    DIABETES = 4
-    HEART_FAILURE = 5
-    VASCULAR_DISEASE = 6
-    AGE_65_74 = 7
-    IS_FEMALE = 8
 
 
 class RiskDetector:
