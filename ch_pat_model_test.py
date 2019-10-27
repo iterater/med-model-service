@@ -1,9 +1,9 @@
 # Test 1: creating model pickle
-import ch_pat_model
+import model_test
 import pickle
-test_model = ch_pat_model.StubStateModel()
+test_model = model_test.StubStateModel()
 test_model.store_model('models\\stub_model.pkl')
-test_model = ch_pat_model.TestAHModel()
+test_model = model_test.TestAHModel()
 test_model.store_model('models\\test_ah_model.pkl')
 # test_model = pickle.load(open('models\\test_ah_model.pkl', 'rb'))
 # print(test_model.model_description)
