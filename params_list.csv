@@ -1,0 +1,6 @@
+id,label,default
+icd10,МКБ-10,I10
+max_sbp,САД (max),120
+sex,Пол (male/female),male
+age,Возраст,
+anamnesis,Анамнез,

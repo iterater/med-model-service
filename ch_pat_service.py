@@ -2,6 +2,7 @@ from flask import Flask, request, jsonify, render_template
 import ch_pat_models_management
 
 models = ch_pat_models_management.load_models('models')
+params = ch_pat_models_management.load_params('params_list.csv')
 
 app = Flask(__name__)
 
@@ -19,7 +20,7 @@ def main_service_ui():
 
 @app.route('/')
 def main_ui():
-    return render_template('main_template.html', fields=[['icd10','МКБ-10'], ['max_sbp','САД (max)']])
+    return render_template('main_template.html', fields=[[p['id'], p['label']] for p in params])
 
 if __name__ == '__main__':
     app.run(port=5000, debug=True)
