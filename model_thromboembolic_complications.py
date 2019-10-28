@@ -36,7 +36,7 @@ class ThromboembolicComplicationsScaleModel(ChPatModel):
             {
                 'title': 'Ожидаемая частота инсультов за год',
                 'value': str(complications_frequency) + '%',
-                'comment': Estimator.therapy(risk_point)
+                'comment': 'Рекомендуется: ' + Estimator.therapy(risk_point)
             }
         )
         return res_dict

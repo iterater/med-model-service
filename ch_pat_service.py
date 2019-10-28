@@ -22,11 +22,5 @@ def main_service_ui():
 def main_ui():
     return render_template('main_template.html', fields=[[p['id'], p['label']] for p in params])
 
-@app.route('/ch_pat_thromboembolic_complications_scale_model', methods=['POST', 'GET'])
-def thromboembolic_complications_ui():
-    return render_template('main_template.html', fields=[
-        ['age', 'Возраст'], ['sex', 'Пол (male/female)'], ['anamnesis', 'Анамнез']
-    ])
-
 if __name__ == '__main__':
     app.run(port=5000, debug=True)
