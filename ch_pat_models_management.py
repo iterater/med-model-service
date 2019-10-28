@@ -1,6 +1,7 @@
 import logging
 import pickle
 import os
+import pandas as pd
 
 # logging setup
 logger = logging.getLogger(__name__)
@@ -36,6 +37,8 @@ def call_models(data, models):
     logger.info('Output: {0}'.format(data))
     return data
 
-def params_list():
-    '''List of available parameters'''
-    return [{'id':'icd10', 'label':'МКБ-10', 'default':'I10'}, {'id':'max_sbp', 'label':'САД (max)', 'default':'120'}]
+def load_params(file_name):
+    '''Load available parameters list'''
+    params_df = pd.read_csv(file_name, sep=',')
+    logger.info('Params loaded from CSV: {0}'.format(', '.join(params_df['id'])))
+    return params_df.T.to_dict().values()

@@ -7,13 +7,13 @@ import ch_pat_models_management
 import json
 
 models = ch_pat_models_management.load_models('models')
+params = ch_pat_models_management.load_params('params_list.csv')
 
 app = dash.Dash(__name__, external_stylesheets=[dbc.themes.UNITED])
 app.config.suppress_callback_exceptions = True
 
 def call_form():
-    param_list = ch_pat_models_management.params_list()
-    form_seq = [dbc.FormGroup([dbc.Label(par['label']), dbc.Input(id=par['id'], value=par['default'])]) for par in param_list]
+    form_seq = [dbc.FormGroup([dbc.Label(par['label']), dbc.Input(id=par['id'], value=par['default'])]) for par in params]
     return dbc.Form([html.H2('Params')] + form_seq + [dbc.Button("Call", id="call_button")], id='input_from')
 
 def loaded_models():
