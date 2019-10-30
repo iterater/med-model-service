@@ -1,6 +1,16 @@
 id,label,default
 icd10,МКБ-10,I10
 max_sbp,САД (max),120
+mean_sbp,САД (mean),110
 sex,Пол (male/female),male
-age,Возраст,
+age,Возраст,55
 anamnesis,Анамнез,
+height,Рост,165
+weight,Вес,80
+smoking,Статус курения,False
+alcohol_regularity,Частота употребления алкоголя,rarely
+creatinine_level,Креатинин,
+effusions,Выпоты в анамнезе,False
+arrhythmia,Аритмия в анамнезе,False
+stenocardia,Стенокардия в анамнезе,False
+heart_attack,ОИМ в анамнезе,False

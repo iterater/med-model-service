@@ -1,4 +1,5 @@
 # Test 1: creating model pickle
+import model_ah_state
 import model_test
 import model_thromboembolic_complications
 #import pickle
@@ -9,6 +10,8 @@ test_model = model_test.TestAHModel()
 test_model.store_model('models\\test_ah_model.pkl')
 test_model = model_thromboembolic_complications.ThromboembolicComplicationsScaleModel()
 test_model.store_model('models\\thromboembolic_complications_scale_model.pkl')
+test_model = model_ah_state.StateAHModel()
+test_model.store_model('models\\ah_state_classifier_model.pkl')
 
 # test_model = pickle.load(open('models\\test_ah_model.pkl', 'rb'))
 # print(test_model.model_description)
