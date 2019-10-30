@@ -11,7 +11,6 @@ class StateAHModel(ChPatModel):
         self._model_description = 'Detection AH type model'
         # Feature order for model, don't change
         self.cols_for_model = [
-            # TODO: gender?
             'sex',
             'height',
             'weight',
@@ -27,7 +26,6 @@ class StateAHModel(ChPatModel):
             'age',
         ]
         self.feature_coding = {
-            # TODO: gender?
             'sex': dict(zip(['female', 'male'], [0, 1])),
             'smoking': dict(zip([False, True], [-1, 1])),
             'alcohol_regularity': dict(zip(['regular', 'weekly',
@@ -40,9 +38,11 @@ class StateAHModel(ChPatModel):
         }
         self.result_name = 'states'
         self.dt_path = 'AhStateClassifier/decision_tree_ah_state.pkl'
+        self.state_pred_model = pickle.load(open(self.dt_path, 'br'))
 
     def check_applicability(self, patient_dict):
-        return all(map(lambda col: col in patient_dict, self.cols_for_model))
+        return all(map(lambda col: col in patient_dict and patient_dict[col] != 'None',
+                       self.cols_for_model))
 
     def code_feature(self, col_name, value):
         if self.feature_coding.get(col_name):
@@ -65,9 +65,8 @@ class StateAHModel(ChPatModel):
         feature_vector = [[self.code_feature(col, patient_dict[col])
                            for col in self.cols_for_model]]
 
-        state_pred_model = pickle.load(open(self.dt_path, 'br'))
         # 0 - вторичная, 1 - первичная
-        state = state_pred_model.predict(feature_vector)[0]
+        state = self.state_pred_model.predict(feature_vector)[0]
 
         # TODO: добавить комментарий к болезни
         res_dict[self.result_name].append({'title': 'Класс АГ',
