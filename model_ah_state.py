@@ -41,10 +41,12 @@ class StateAHModel(ChPatModel):
         self.state_pred_model = pickle.load(open(self.dt_path, 'br'))
 
     def check_applicability(self, patient_dict):
-        return all(map(lambda col: col in patient_dict and patient_dict[col] != 'None',
+        return all(map(lambda col: col in patient_dict and patient_dict[col] is not None,
                        self.cols_for_model))
 
     def code_feature(self, col_name, value):
+        if value is None:
+            raise ValueError
         if self.feature_coding.get(col_name):
             return self.feature_coding[col_name][self.try_cast(value)]
         return value
@@ -57,24 +59,24 @@ class StateAHModel(ChPatModel):
             return value
 
     def apply(self, patient_dict):
-        # TODO: добавить заполнение пропусков
-        res_dict = patient_dict.copy()
-        if self.result_name not in res_dict:
-            res_dict[self.result_name] = []
-
-        feature_vector = [[self.code_feature(col, patient_dict[col])
-                           for col in self.cols_for_model]]
+        try:
+            feature_vector = [[self.code_feature(col, patient_dict[col])
+                               for col in self.cols_for_model]]
+        except ValueError:
+            return patient_dict
 
         # 0 - вторичная, 1 - первичная
         state = self.state_pred_model.predict(feature_vector)[0]
 
+        res_dict = patient_dict.copy()
+        if self.result_name not in res_dict:
+            res_dict[self.result_name] = []
         # TODO: добавить комментарий к болезни
         res_dict[self.result_name].append({'title': 'Класс АГ',
                                            'comment': 'Класс характеризуется повышенным риском...'}
                                           )
         if state:
-            res_dict[self.result_name][-1]['value'] = '№1'
-        else:
             res_dict[self.result_name][-1]['value'] = '№2'
-        print('res_dict', res_dict)
+        else:
+            res_dict[self.result_name][-1]['value'] = '№1'
         return res_dict
