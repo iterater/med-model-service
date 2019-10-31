@@ -34,8 +34,11 @@ def call_models(data, models):
             if m.check_applicability(data) and not model_application_flag[i]:
                 has_applicable_models = True
                 model_application_flag[i] = True
-                logger.info('Applying mode: \'{0}\''.format(m.model_description))
-                data = m.apply(data)    
+                try:
+                    data = m.apply(data)
+                    logger.info('Applied model: \'{0}\''.format(m.model_description))
+                except Exception as e:
+                    logger.error('Model \'{0}\' crashed with exception {1}'.format(m.model_description, e))
     logger.info('Output: {0}'.format(data))
     return data
 
