@@ -14,3 +14,11 @@ effusions,Выпоты в анамнезе,False
 arrhythmia,Аритмия в анамнезе,False
 stenocardia,Стенокардия в анамнезе,False
 heart_attack,ОИМ в анамнезе,False
+mean_dbp,ДАД ( (mean),80
+bsa,Площадь поверхности тела,1.73
+physical_activity,Не меньше 4ч.в неделю физ.нагрузки,False
+often_vegetables,Есть ли в ежедневном рационе овощи,False
+AG_drags,Постоянное упортебление антигипертензивных препаратов,False
+waistline,Объем талии,90
+degree_kinship_with_diabetic,Степень родства с диабетиком,0
+high_glucose,Наблюдалась ли повышенная глюкоза крови,False
