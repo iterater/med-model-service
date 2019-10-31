@@ -2,7 +2,9 @@ import pickle
 from ch_pat_model import ChPatModel
 import pandas as pd
 import warnings
+
 warnings.filterwarnings("ignore")
+
 
 class DiabetesPrediction(ChPatModel):
     def __init__(self):
@@ -24,11 +26,16 @@ class DiabetesPrediction(ChPatModel):
             else:
                 return value
 
+        def ValueIsCorrect(Value):
+            CorrectStrValues = ["True", "False","male","female"]
+            return (str(Value).replace(".", "", 1).isdigit()) | (str(Value) in CorrectStrValues)
+
         feat_for_model = {feat: float_value(value, feat) for feat, value in zip(patient_dict, patient_dict.values()) if
-                          feat in self._need_features}
+                          (feat in self._need_features) & (ValueIsCorrect(value))}
 
         if ("weight" in patient_dict) & ("height" in patient_dict):
-            feat_for_model['bmi'] = int(patient_dict["weight"]) / (int(patient_dict["height"]) / 100) ** 2
+            if ValueIsCorrect(patient_dict["weight"])&ValueIsCorrect(patient_dict["height"]):
+                feat_for_model['bmi'] = int(patient_dict["weight"]) / (int(patient_dict["height"]) / 100) ** 2
         return feat_for_model
 
     def check_applicability(self, patient_dict, take_features=take_features):
@@ -116,10 +123,9 @@ class FINDRISK(DiabetesPrediction):
     def show_model_description_full(self):
         open(self._model_description_full, "rb")()
 
-
 # a = DiabetesPrediction()
 # dicipat = {'weight': 80, 'height': "80", 'mean_dbp': "100", 'age': 80, 'mean_sbp': 80, "bsa": 2}
-# print(DiabetesPrediction.check_applicability(a, dicipat))
+# print(DiabetesPrediction.apply(a, dicipat))
 
 # a = FINDRISK()
 # dicipat = {'icd10': 'I10', 'max_sbp': '120', 'mean_sbp': '110', 'sex': 'male', 'age': '55', 'anamnesis': 'хсн аг пол',
@@ -127,4 +133,4 @@ class FINDRISK(DiabetesPrediction):
 #            'effusions': 'False', 'arrhythmia': 'False', 'stenocardia': 'False', 'heart_attack': 'False',
 #            'mean_dbp': '80', 'bsa': '1.73', 'physical_activity': 'False', 'often_vegetables': 'False',
 #            'AG_drags': 'False', 'waistline': '90', 'degree_kinship_with_diabetic': '0', 'high_glucose': 'False'}
-# print(FINDRISK.apply(a, dicipat))
+# print(FINDRISK.check_applicability(a, dicipat))
