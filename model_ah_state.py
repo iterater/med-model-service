@@ -76,7 +76,7 @@ class StateAHModel(ChPatModel):
                                            'comment': 'Класс характеризуется повышенным риском...'}
                                           )
         if state:
-            res_dict[self.result_name][-1]['value'] = '№1'
-        else:
             res_dict[self.result_name][-1]['value'] = '№2'
+        else:
+            res_dict[self.result_name][-1]['value'] = '№1'
         return res_dict
