@@ -2,14 +2,22 @@ import logging
 import pickle
 import os
 import pandas as pd
+import datetime as dt
 
 # logging setup
 logger = logging.getLogger(__name__)
 logger.setLevel(logging.INFO)
+formatter = logging.Formatter('%(asctime)s - %(message)s')
 ch = logging.StreamHandler()
 ch.setLevel(logging.INFO)
-ch.setFormatter(logging.Formatter('%(asctime)s - %(message)s'))
+ch.setFormatter(formatter)
 logger.addHandler(ch)
+file_suffix = dt.datetime.now().strftime('%Y-%m-%d-%H-%M-%S')
+log_file_name = os.path.join('log', 'ew-log-' + file_suffix + '.txt')
+fh = logging.FileHandler(log_file_name)
+fh.setLevel(logging.WARNING)
+fh.setFormatter(formatter)
+logger.addHandler(fh)
 
 def load_models(basic_model_path):
     '''Load pckled models from dir'''    
