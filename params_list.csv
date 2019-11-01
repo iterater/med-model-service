@@ -1,25 +1,41 @@
 id,label,default
+icd10,МКБ-10,I10
 max_sbp,САД (max),120
 mean_sbp,САД (mean),110
-sex,Пол (male/female),male
+sex,Пол (male/female),female
 age,Возраст,55
-height,Рост (см),165
-weight,Вес (кг),80
+anamnesis,Анамнез,
+height,Рост,165
+weight,Вес,60
 smoking,Статус курения,False
+alcohol_regularity,Частота употребления алкоголя,rarely
+creatinine_level,Креатинин,2
+effusions,Выпоты в анамнезе,False
+arrhythmia,Аритмия в анамнезе,False
+stenocardia,Стенокардия в анамнезе,False
+heart_attack,ОИМ в анамнезе,False
+mean_dbp,ДАД ( (mean),80
+bsa,Площадь поверхности тела,1.73
+physical_activity,Не меньше 4ч.в неделю физ.нагрузки,False
+often_vegetables,Есть ли в ежедневном рационе овощи,False
+AG_drags,Постоянное упортебление антигипертензивных препаратов,False
 waistline,Объем талии,90
+degree_kinship_with_diabetic,Степень родства с диабетиком,0
+high_glucose,Наблюдалась ли повышенная глюкоза крови,False
+creatinine,Креатинин,1.2
 ah,Диагноз АГ (да/нет),True
 ah_stage,АГ (степень),2
 fbs,Глюкоза плазмы натощак (ммоль/л),5.0
 gtt,Нарушение толерантности к глюкозе (есть/нет),False
 total_cholesterol,Общий холестерин (ммоль/л),3.0
 ldl_cholesterol,ХЛНП (ммоль/л),2.0
-hdl_cholesterol,ХЛВП (ммоль/л),1.1
+hdl_cholesterol,ХЛВП (ммоль/л),2.1
 triglycerides,Триглицериды (ммоль/л),1.5
-family_early_heart_disease, Семейный анамнез ССЗ (возраст),55
-pulse_pressure,Пульсовое давление (мм. рт.ст.),60
+family_early_heart_disease, Семейный анамнез ССЗ (возраст),75
+pulse_pressure,Пульсовое давление (мм. рт.ст.),50
 carotid_wall_thickening,Утолщение стенки сонных артерий,False
 pulse_wave_velocity,Скорость пульсовой волны («каротидно-феморальной»),9
-ankle_brachia_sbp_index,Лодыжечно-плечевой индекс СД,0.5
+ankle_brachia_sbp_index,Лодыжечно-плечевой индекс СД,1.5
 chronic_kidney_disease, Стадия ХБП (0 - если нет), 0
 microalbuminuria,Микроальбуминурия (есть/нет),False
 cerebrovascular_disease,Цереброваскулярная болезнь,False

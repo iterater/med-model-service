@@ -3,6 +3,7 @@ import model_ah_state
 import model_test
 import model_thromboembolic_complications
 import model_diab_predict
+import model_score
 #import pickle
 
 test_model = model_test.StubStateModel()
@@ -17,6 +18,11 @@ test_model = model_diab_predict.DiabetesPrediction()
 test_model.store_model('models\\diab_5_years_risk.pkl')
 test_model = model_diab_predict.FINDRISK()
 test_model.store_model('models\\findrisk.pkl')
+test_model = model_score.ScoreModel()
+test_model.store_model('models\\scoreModel.pkl')
+test_model = model_score.TotalRiskModel()
+test_model.store_model('models\\TotalRiskModel.pkl')
+
 # test_model = pickle.load(open('models\\test_ah_model.pkl', 'rb'))
 # print(test_model.model_description)
 
