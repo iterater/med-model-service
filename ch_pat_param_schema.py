@@ -1,0 +1,27 @@
+from marshmallow import Schema, fields, validate, ValidationError
+
+class ParamSchema(Schema):
+    '''Parameters validation schema'''
+    icd10 = fields.String(validate=validate.Regexp('[a-zA-Z]\\d+\\.?\\d*'), default='')
+    max_sbp = fields.Integer(validate=validate.Range(min=0, max=500), default=120)
+    mean_sbp = fields.Integer(validate=validate.Range(min=0, max=500), default=120)
+    sex = fields.String(validate=validate.OneOf(['male', 'female']), default='male')
+    age = fields.Integer(validate=validate.Range(min=0), default=55)
+    anamnesis = fields.String(default='')    
+    height = fields.Integer(validate=validate.Range(min=0), default=165)
+    weight = fields.Integer(validate=validate.Range(min=0), default=80)
+    smoking = fields.Boolean(default=False)
+    alcohol_regularity = fields.String(validate=validate.OneOf(['regular', 'weekly', 'rarely', 'deny']), default='rarely')
+    creatinine_level = fields.Integer(validate=validate.Range(min=0))
+    effusions = fields.Boolean(default=False)
+    arrhythmia = fields.Boolean(default=False)
+    stenocardia = fields.Boolean(default=False)
+    heart_attack = fields.Boolean(default=False)
+    mean_dbp = fields.Integer(validate=validate.Range(min=0, max=500), default=80)
+    bsa = fields.Float(default=1.73)
+    physical_activity = fields.Boolean(default=False)
+    often_vegetables = fields.Boolean(default=False)
+    AG_drags = fields.Boolean(default=False)
+    waistline = fields.Integer(validate=validate.Range(min=0), default=90)
+    degree_kinship_with_diabetic = fields.Integer(validate=validate.Range(min=0), default=0)
+    high_glucose = fields.Boolean(default=False)    

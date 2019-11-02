@@ -13,5 +13,16 @@
       <i>Комментарий:</i> {{s["comment"]}}
     </div>
     {% endfor %}
+    {% for e in errors %}
+    <div class="error">
+      <div class="block_type_label">ошибка</div>
+      <div class="block_title">Ошибка валидации</div>
+      <i>Параметр:</i> {{e[0]}}<br/>
+      <i>Комментарий:</i><br/>
+      {% for e_msg in e[1] %}
+        {{e_msg}}<br/>
+      {% endfor %}
+    </div>
+    {% endfor %}
   </body>
 </html>
