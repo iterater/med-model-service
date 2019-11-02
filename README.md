@@ -49,7 +49,7 @@ cd ~/chronic-patient-model-service
 flask run --host=0.0.0.0 &
 ```
 
-Снатие фоновых процессов flask (на сервере ДМ скрипт `~/kill_ch_server.sh`):
+Снятие фоновых процессов flask (на сервере ДМ скрипт `~/kill_ch_server.sh`):
 ```bash
 killall flask
 ```
