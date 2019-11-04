@@ -88,4 +88,6 @@ def validate_data(data):
 
 def generate_default_data(params):
     '''Generate dictionary with default values'''
-    return {p['id']:p['default'] for p in params}
+    generated_default_data = {p['id']:p['default'] for p in params}
+    logger.info('Generated data: {0}'.format(generated_default_data))
+    return generated_default_data
