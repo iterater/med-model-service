@@ -26,17 +26,3 @@ test_model.store_model('models\\findrisk.pkl')
 # url = 'http://195.222.181.179:5000/ch_pat_service'
 # r = requests.post(url,json={'icd10':'I10','max_sbp':160})
 # print(r.json())
-
-'''
-from ThromboembolicComplications.ModelDataPreparator import *
-
-
-ModelDataPreparator(
-    features_file_path='/Users/kabyshev/Desktop/Developing/medicine/Table2Object174part1.txt',
-    persons_file_path='/Users/kabyshev/Downloads/Table2Download153ObjectFeatures.txt',
-    csv_file_path='/Users/kabyshev/Desktop/Developing/chronic-patient-model-service/models/personal_data_with_diagnosises.csv',
-    features_list=['Name', 'Массив_последнего_диагноза', 'Клинический_диагноз'],
-    personal_data_list=['Name', 'Пол', 'Дата_рождения'],
-    join_key='Name'
-).start()
-'''

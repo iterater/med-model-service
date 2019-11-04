@@ -50,4 +50,4 @@ class RiskDetector:
         text = text.lower()
         text = re.sub(r'\d+', '', text)
         r = re.compile('|'.join([r'\b%s\b' % w for w in words]), flags=re.I)
-        return len(r.findall(text.lower())) > 0
+        return len(r.findall(text)) > 0
