@@ -1,20 +1,21 @@
 from ThromboembolicComplications.RiskDetector import *
 import ThromboembolicComplications.PatientInfo as PatientInfo
 
+
 class Estimator:
 
     @staticmethod
     def calculate_risk_point(data: PatientInfo):
         detector = RiskDetector()
-        sum = 0
-        sum += detector.calculate_age(data.age)
-        sum += detector.calculate_sex(data.sex)
-        sum += detector.calculate_stroke(data.diagnosis)
-        sum += detector.calculate_arterial_hypertension(data.diagnosis)
-        sum += detector.calculate_diabetes(data.diagnosis)
-        sum += detector.calculate_heart_failure(data.diagnosis)
-        sum += detector.calculate_vascular_disease(data.diagnosis)
-        return sum
+        point = 0
+        point += detector.calculate_age(data.age)
+        point += detector.calculate_sex(data.sex)
+        point += detector.calculate_stroke(data.diagnosis)
+        point += detector.calculate_arterial_hypertension(data.diagnosis)
+        point += detector.calculate_diabetes(data.diagnosis)
+        point += detector.calculate_heart_failure(data.diagnosis)
+        point += detector.calculate_vascular_disease(data.diagnosis)
+        return point
 
     @staticmethod
     def find_complications_frequency(scale):
