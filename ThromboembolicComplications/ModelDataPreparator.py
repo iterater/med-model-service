@@ -1,5 +1,7 @@
 import pandas as pd
-
+import ThromboembolicComplications.Helpers as helper
+from ThromboembolicComplications.Estimator import *
+from ThromboembolicComplications.PatientInfo import PatientInfo
 
 class ModelDataPreparator:
 
@@ -33,3 +35,25 @@ class ModelDataPreparator:
         print('\nSaving...')
         model.to_csv(path_or_buf=self.csv_file_path)
         print('Saved', len(model))
+
+    def classify(self, model_path):
+        model = pd.read_csv(model_path)
+        model['Class'] = 0
+        number_of_patients = 0
+        print("Iterate...")
+        for index, row in model.iterrows():
+            age = helper.calculate_age(row['Дата_рождения'])
+            if age < 0:
+                continue
+            info = PatientInfo(
+                age=age,
+                sex='female' if row['Пол'] == 'Женский' else 'male',
+                diagnosis=row['Массив_последнего_диагноза'] + row['Клинический_диагноз']
+            )
+            risk_point = Estimator.calculate_risk_point(data=info)
+
+            if risk_point >= 4:
+                number_of_patients += 1
+                model.at[index, 'Class'] = 1
+        print("Found patients with risk point >= 4:", number_of_patients)
+        self.__save(model)

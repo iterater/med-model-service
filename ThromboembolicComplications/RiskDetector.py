@@ -42,5 +42,7 @@ class RiskDetector:
         return 0
 
     def __find_using_re(self, words, text):
+        text = text.lower()
+        text = re.sub(r'\d+', '', text)
         r = re.compile('|'.join([r'\b%s\b' % w for w in words]), flags=re.I)
         return len(r.findall(text.lower())) > 0
