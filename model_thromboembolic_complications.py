@@ -1,6 +1,7 @@
 from ch_pat_model import ChPatModel
-from ThromboembolicComplications.Estimator import *
-from ThromboembolicComplications.PatientInfo import *
+from ThromboembolicComplications.ClassificationModelFactory import *
+import pickle
+import os
 
 
 class ThromboembolicComplicationsScaleModel(ChPatModel):
@@ -40,3 +41,47 @@ class ThromboembolicComplicationsScaleModel(ChPatModel):
             }
         )
         return res_dict
+
+
+class ThromboembolicComplicationsModel(ChPatModel):
+
+    def __init__(self, features_file_path, persons_file_path):
+        self.features_file_path = features_file_path
+        self.persons_file_path = persons_file_path
+        self._model_description = 'Thromboembolic complications predicting model'
+        self._ready_classifier_path = 'ThromboembolicComplications/rfc_model.pkl'
+
+        if not os.path.isfile(self._ready_classifier_path):
+            self.__create_model()
+
+    def check_applicability(self, patient_dict):
+        return ('age' in patient_dict) and ('sex' in patient_dict) and ('anamnesis' in patient_dict)
+
+    def apply(self, patient_dict):
+
+        return patient_dict
+
+    def __create_model(self):
+        model_path = 'models/personal_data_with_diagnosises.csv'
+
+        if not os.path.isfile(model_path):
+            ClassificationModelFactory.prepare_data(
+                features_file_path=self.features_file_path,
+                persons_file_path=self.persons_file_path,
+                csv_file_path=model_path,
+                features_list=['Name', 'Массив_последнего_диагноза', 'Клинический_диагноз'],
+                personal_data_list=['Name', 'Пол', 'Дата_рождения'],
+                join_key='Name'
+            )
+            classified_model = ClassificationModelFactory.classify(
+                model_path=model_path,
+                updated_model_path=model_path
+            )
+            model = ClassificationModelFactory.create_model(df=classified_model, n_estimators=200)
+        else:
+            model = ClassificationModelFactory.create_model(df_path=model_path, n_estimators=200)
+
+        print("===> Saving the ready model...")
+        pickle.dump(model, open(self._ready_classifier_path, 'wb'))
+        print("Done.")
+
