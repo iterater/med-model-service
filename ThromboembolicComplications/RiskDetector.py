@@ -4,6 +4,10 @@ import re
 
 class RiskDetector:
 
+    @staticmethod
+    def is_has(words, diagnosis):
+        return 1 if RiskDetector.__find_using_re(words=words, text=diagnosis) else 0
+
     def calculate_age(self, age):
         if age >= 75:
             return 2
@@ -41,7 +45,8 @@ class RiskDetector:
             return 1
         return 0
 
-    def __find_using_re(self, words, text):
+    @staticmethod
+    def __find_using_re(words, text):
         text = text.lower()
         text = re.sub(r'\d+', '', text)
         r = re.compile('|'.join([r'\b%s\b' % w for w in words]), flags=re.I)
