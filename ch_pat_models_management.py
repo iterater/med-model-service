@@ -84,3 +84,8 @@ def validate_data(data):
     for e in errors:
         logger.error('Invalid parameter \'{0}\': {1}'.format(e, ' / '.join(errors[e])))
     return errors
+
+
+def generate_default_data(params):
+    '''Generate dictionary with default values'''
+    return {p['id']:p['default'] for p in params}
