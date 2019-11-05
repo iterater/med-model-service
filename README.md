@@ -4,7 +4,7 @@
 
 - `ch_pat_service.py` - рабочая версия сервиса и базовое (отладочное) приложение №1 на "чистом" [flask](https://flask.palletsprojects.com/)
 - `ch_pat_dash_app.py` - базовое (отладочное) приложение №2 с использованием [dash](https://plot.ly/dash/)
-- `ch_pat_model.py`, `ch_pat_model_test.py` - базовый класс и пример реализации предсказательной модели
+- `ch_pat_model.py`, `model_basics.py` - базовый класс и пример реализации предсказательной модели
 - `ch_pat_models_management.py` - функции управления моделями
 - `ch_pat_param_schema.py` - схема для валидации параметров на [marshmallow](https://marshmallow.readthedocs.io/)
 - `params_list.csv` - список параметров
