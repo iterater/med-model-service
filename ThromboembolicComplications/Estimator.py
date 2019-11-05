@@ -11,6 +11,7 @@ class Point:
         self.heart_failure_feature = heart_failure_feature
         self.vascular_disease_feature = vascular_disease_feature
 
+
 class Estimator:
 
     @staticmethod

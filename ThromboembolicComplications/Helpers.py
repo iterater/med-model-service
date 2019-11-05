@@ -1,5 +1,6 @@
 import datetime
 
+
 def calculate_age(born):
     try:
         born_time_obj = datetime.datetime.strptime(str(born), '%Y%m%d')
