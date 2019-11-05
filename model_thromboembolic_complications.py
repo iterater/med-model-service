@@ -79,12 +79,13 @@ class ThromboembolicComplicationsModel(ChPatModel):
             [age, 1 if patient_dict['sex'] == 'female' else 0, feature.stroke_feature,
              feature.arterial_hypertension_feature, feature.diabetes_feature, feature.heart_failure_feature, feature.vascular_disease_feature ]
         ])
+        complications_frequency = Estimator.find_complications_frequency(risk_point)
 
         res_dict['states'].append(
             {
-                'title': 'Риск',
+                'title': 'Риск возникновения тромбоэмболических осложнений',
                 'value': 'Высокий' if predicted_class[0] == 1 else 'Низкий',
-                'comment': ''
+                'comment': 'Ожидаемая частота инсультов за год ' + str(complications_frequency) + '%'
             }
         )
         return res_dict

@@ -74,7 +74,7 @@ class ClassificationModelFactory:
             model.at[index, 'Diabetes_feature'] = feature.diabetes_feature
             model.at[index, 'Heart_failure_feature'] = feature.heart_failure_feature
             model.at[index, 'Vascular_disease_feature'] = feature.vascular_disease_feature
-            model.at[index, 'Class'] = RiskDetector.is_has(words=['Тромбоэмболия', 'Фибриляция', 'Трепетание'], diagnosis=diagnosis)
+            model.at[index, 'Class'] = RiskDetector.find_class(diagnosis=diagnosis)
 
             if risk_point >= 4:
                 number_of_patients += 1

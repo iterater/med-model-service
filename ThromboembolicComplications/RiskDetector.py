@@ -6,7 +6,11 @@ class RiskDetector:
 
     @staticmethod
     def is_has(words, diagnosis):
-        return 1 if RiskDetector.__find_using_re(words=words, text=diagnosis) else 0
+        return RiskDetector.__find_using_re(words=words, text=diagnosis)
+
+    @staticmethod
+    def find_class(diagnosis):
+        return 1 if RiskDetector.is_has(const.COMPLICATIONS_KEY_WORDS, diagnosis) else 0
 
     def calculate_age(self, age):
         if age >= 75:
