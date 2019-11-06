@@ -14,7 +14,7 @@ effusions,Выпоты в анамнезе,False
 arrhythmia,Аритмия в анамнезе,False
 stenocardia,Стенокардия в анамнезе,False
 heart_attack,ОИМ в анамнезе,False
-mean_dbp,ДАД ( (mean),80
+mean_dbp,ДАД (mean),80
 bsa,Площадь поверхности тела,1.73
 physical_activity,Не меньше 4ч.в неделю физ.нагрузки,False
 often_vegetables,Есть ли в ежедневном рационе овощи,False

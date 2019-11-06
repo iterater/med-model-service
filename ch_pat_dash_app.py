@@ -33,6 +33,13 @@ def build_all_states(states):
     return html.Div([html.H3('States')] + [html.Div(s_to_html(s), style=s_style) for s in states])
 
 
+def build_all_errors(errors):
+    e_style = {'background-color': 'red', 'margin': '10px', 'padding': '5px'}
+    e_to_html = lambda e: [html.B('Ошибка валидации'), html.P('Параметр: '+e[0])] + \
+                          [html.P(e_msg, style={'font-size': '70%'}) for e_msg in e[1]]
+    return html.Div([html.H3('Errors')] + [html.Div(e_to_html(e), style=e_style) for e in errors])
+
+
 @app.callback(Output('output_div', 'children'), [Input('call_button', 'n_clicks'), Input('input_from', 'children')])
 def data_process_callback(n, input_form_content):
     input_to_tuple = lambda i: (i['props']['id'], i['props']['value'])
@@ -42,7 +49,12 @@ def data_process_callback(n, input_form_content):
     else:
         in_dict = dict(fg_to_input(inp) for inp in input_form_content if inp['type'] == 'FormGroup')
         out_dict = ch_pat_models_management.call_models(in_dict, models)
-        return html.Div([build_all_states(out_dict['states'])])
+        content = []
+        if 'states' in out_dict:
+            content.append(build_all_states(out_dict['states']))
+        if ('errors' in out_dict) and (len(out_dict['errors']) > 0):
+            content.append(build_all_errors(out_dict['errors'].items()))
+        return html.Div(content)
 
 
 app.layout = dbc.Container([dbc.Row([
@@ -50,4 +62,4 @@ app.layout = dbc.Container([dbc.Row([
     dbc.Col([html.H2('Output'), html.Div(id='output_div', children=[])])])])
 
 if __name__ == '__main__':
-    app.run_server(debug=True)
+    app.run_server(debug=True, use_reloader=False)

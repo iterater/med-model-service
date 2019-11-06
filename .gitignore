@@ -105,3 +105,6 @@ venv.bak/
 
 # PyCharm IDE
 .idea/*
+
+# current project
+log/

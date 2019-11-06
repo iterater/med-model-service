@@ -1,20 +1,34 @@
 from ThromboembolicComplications.RiskDetector import *
 import ThromboembolicComplications.PatientInfo as PatientInfo
 
+
+class Point:
+    def __init__(self, stroke_feature, arterial_hypertension_feature, diabetes_feature, heart_failure_feature,
+                 vascular_disease_feature):
+        self.stroke_feature = stroke_feature
+        self.arterial_hypertension_feature = arterial_hypertension_feature
+        self.diabetes_feature = diabetes_feature
+        self.heart_failure_feature = heart_failure_feature
+        self.vascular_disease_feature = vascular_disease_feature
+
+
 class Estimator:
 
     @staticmethod
     def calculate_risk_point(data: PatientInfo):
+
         detector = RiskDetector()
-        sum = 0
-        sum += detector.calculate_age(data.age)
-        sum += detector.calculate_sex(data.sex)
-        sum += detector.calculate_stroke(data.diagnosis)
-        sum += detector.calculate_arterial_hypertension(data.diagnosis)
-        sum += detector.calculate_diabetes(data.diagnosis)
-        sum += detector.calculate_heart_failure(data.diagnosis)
-        sum += detector.calculate_vascular_disease(data.diagnosis)
-        return sum
+        age = detector.calculate_age(data.age)
+        sex = detector.calculate_sex(data.sex)
+        stroke = detector.calculate_stroke(data.diagnosis)
+        hypertension = detector.calculate_arterial_hypertension(data.diagnosis)
+        diabetes = detector.calculate_diabetes(data.diagnosis)
+        heart_failure = detector.calculate_heart_failure(data.diagnosis)
+        vascular_disease = detector.calculate_vascular_disease(data.diagnosis)
+
+        point = Point(bool(stroke), bool(hypertension), bool(diabetes), bool(heart_failure), bool(vascular_disease))
+
+        return point, sum([age, sex, stroke, hypertension, diabetes, heart_failure, vascular_disease])
 
     @staticmethod
     def find_complications_frequency(scale):

@@ -16,11 +16,13 @@ def main_service():
 def main_service_ui():
     data = request.args.to_dict() if request.method == 'GET' else request.get_json(force=True)
     data = ch_pat_models_management.call_models(data, models)
-    return render_template('resp_template.html', states=data['states'] if 'states' in data else [])
+    return render_template('resp_template.html', 
+                           states=data['states'] if 'states' in data else [],
+                           errors=data['errors'].items() if 'errors' in data else [])
 
 @app.route('/')
 def main_ui():
     return render_template('main_template.html', fields=[[p['id'], p['label']] for p in params])
 
 if __name__ == '__main__':
-    app.run(port=5000, debug=True)
+    app.run(port=5000, debug=True, use_reloader=False)
