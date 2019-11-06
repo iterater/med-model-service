@@ -23,7 +23,7 @@ logger.addHandler(fh)
 def load_models(basic_model_path):
     '''Load pckled models from dir'''    
     models = []
-    for fn in os.listdir(basic_model_path):		
+    for fn in os.listdir(basic_model_path):
         if not fn.endswith('.pkl'):
             continue
         m = pickle.load(open(os.path.join(basic_model_path, fn), 'br'))
