@@ -63,6 +63,7 @@ def call_models(data, models):
 def load_params(file_name):
     '''Load available parameters list'''
     params_df = pd.read_csv(file_name, sep=',')
+    params_df = params_df.fillna('')
     logger.info('Params loaded from CSV: {0}'.format(', '.join(params_df['id'])))
     schema = ParamSchema()
     schema_ids = list(schema.fields.keys())
@@ -88,4 +89,6 @@ def validate_data(data):
 
 def generate_default_data(params):
     '''Generate dictionary with default values'''
-    return {p['id']:p['default'] for p in params}
+    generated_default_data = {p['id']:p['default'] for p in params}
+    logger.info('Generated data: {0}'.format(generated_default_data))
+    return generated_default_data

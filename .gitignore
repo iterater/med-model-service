@@ -106,5 +106,9 @@ venv.bak/
 # PyCharm IDE
 .idea/*
 
+#VSCode
+.vscode/*
+*.code-workspace
+
 # current project
 log/

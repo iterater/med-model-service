@@ -2,9 +2,8 @@ import json
 import pickle
 from ch_pat_model import ChPatModel
 
-class TestAHModel(ChPatModel):
+class BasicAHModel(ChPatModel):
     '''Test model with simple AH rules.'''
-
     def __init__(self):
         self._model_description = 'Basic AH model'
 
@@ -33,3 +32,10 @@ class StubStateModel(ChPatModel):
             res_dict['states'] = []
         res_dict['states'].append({'title': 'Тест', 'value': 'ОК', 'comment': 'Тестовая модель отработала'})
         return res_dict
+
+if __name__ == '__main__':
+    # train and store models
+    m1 = BasicAHModel()
+    m1.store_model('models\\test_ah_model.pkl')
+    m2 = StubStateModel()
+    m2.store_model('models\\stub_model.pkl')
