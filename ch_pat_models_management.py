@@ -63,6 +63,7 @@ def call_models(data, models):
 def load_params(file_name):
     '''Load available parameters list'''
     params_df = pd.read_csv(file_name, sep=',')
+    params_df = params_df.fillna('')
     logger.info('Params loaded from CSV: {0}'.format(', '.join(params_df['id'])))
     schema = ParamSchema()
     schema_ids = list(schema.fields.keys())
