@@ -50,8 +50,8 @@ class ThromboembolicComplicationsModel(ChPatModel):
     def __init__(self):
         super().__init__()
 
-        self._features_file_path = '/Users/kabyshev/Desktop/Developing/chronic-patient-model-service/ThromboembolicComplications/Table2Object174part1.txt'
-        self._persons_file_path = '/Users/kabyshev/Desktop/Developing/chronic-patient-model-service/ThromboembolicComplications/Table2Download153ObjectFeatures.txt'
+        self._features_file_path = 'ThromboembolicComplications/Table2Object174part1.txt'
+        self._persons_file_path = 'ThromboembolicComplications/Table2Download153ObjectFeatures.txt'
         self._model_description = 'Thromboembolic complications predicting model'
         self._ready_classifier_path = 'ThromboembolicComplications/rfc_model.pkl'
 
