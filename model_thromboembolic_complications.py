@@ -50,8 +50,8 @@ class ThromboembolicComplicationsModel(ChPatModel):
     def __init__(self):
         super().__init__()
 
-        self._features_file_path = '/Users/kabyshev/Desktop/Developing/medicine/Table2Object174part1.txt',
-        self._persons_file_path = '/Users/kabyshev/Downloads/Table2Download153ObjectFeatures.txt'
+        self._features_file_path = 'ThromboembolicComplications/Table2Object174part1.txt'
+        self._persons_file_path = 'ThromboembolicComplications/Table2Download153ObjectFeatures.txt'
         self._model_description = 'Thromboembolic complications predicting model'
         self._ready_classifier_path = 'ThromboembolicComplications/rfc_model.pkl'
 
@@ -91,7 +91,7 @@ class ThromboembolicComplicationsModel(ChPatModel):
         return res_dict
 
     def __create_classifier(self):
-        model_path = 'models/personal_data_with_diagnosises.csv'
+        model_path = 'ThromboembolicComplications/personal_data_with_diagnosises.csv'
 
         if not os.path.isfile(model_path):
             ClassificationModelFactory.prepare_data(
@@ -106,9 +106,9 @@ class ThromboembolicComplicationsModel(ChPatModel):
                 model_path=model_path,
                 updated_model_path=model_path
             )
-            model = ClassificationModelFactory.create_model(df=classified_model, n_estimators=200)
+            model = ClassificationModelFactory.create_model(df=classified_model, n_estimators=100)
         else:
-            model = ClassificationModelFactory.create_model(df_path=model_path, n_estimators=200)
+            model = ClassificationModelFactory.create_model(df_path=model_path, n_estimators=100)
 
         print("===> Saving the ready model...")
         pickle.dump(model, open(self._ready_classifier_path, 'wb'))
