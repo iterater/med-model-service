@@ -8,6 +8,8 @@ from sklearn.model_selection import train_test_split
 from sklearn.utils import resample
 from sklearn.preprocessing import StandardScaler
 from sklearn.ensemble import RandomForestClassifier
+from sklearn.ensemble import GradientBoostingClassifier
+from sklearn.svm import SVC
 from sklearn.metrics import classification_report, confusion_matrix, accuracy_score
 
 
@@ -15,14 +17,14 @@ class ClassificationModelFactory:
 
     @staticmethod
     def prepare_data(features_file_path, persons_file_path, csv_file_path, features_list, personal_data_list, join_key):
-        print('Reading features file...')
+        print('Reading features file', features_file_path)
         features_df = pd.read_csv(features_file_path, encoding='cp1251', sep='\t', engine='python')
         print('Filtering features file...')
         features_df_filtered = features_df.dropna(subset=features_list)[features_list]
         print('Features preparation complete.\nBefore elements:', len(features_df),
               '\nAfter elements: ', len(features_df_filtered))
 
-        print('Reading persons file...')
+        print('Reading persons file', persons_file_path)
         persons_df = pd.read_csv(persons_file_path, encoding='cp1251', sep='\t', engine='python')
         print('Filtering persons file...')
         persons_df_filtered = persons_df.dropna(subset=personal_data_list)[personal_data_list]
@@ -36,7 +38,7 @@ class ClassificationModelFactory:
 
     @staticmethod
     def __save(model, save_file_path):
-        print('==> Saving model to csv file...')
+        print('==> Saving model to csv file at', save_file_path)
         model.to_csv(path_or_buf=save_file_path)
         print('Done. Saved elements:', len(model))
 
@@ -91,7 +93,7 @@ class ClassificationModelFactory:
             if df_path is None:
                 print("Error. Data frame and his path are None. The method requires one of this params.")
                 return
-            print("==> Reading CSV...")
+            print("==> Reading CSV file at", df_path)
             df = pd.read_csv(df_path)
 
         features = ['Sex', 'Age', 'Stroke_feature', 'Arterial_hypertension_feature', 'Diabetes_feature',
@@ -112,24 +114,36 @@ class ClassificationModelFactory:
         # Combine minority class with downsampled majority class
         df_downsampled = pd.concat([df_majority_downsampled, df_minority])
 
-        X = df_downsampled[features].values
-        y = df_downsampled.Class.values
+        classifier = RandomForestClassifier(n_estimators=n_estimators, random_state=123)
+        #classifier = SVC()
+        #classifier = GradientBoostingClassifier(n_estimators=n_estimators, random_state=123)
+
+        return ClassificationModelFactory.__train_classifier(classifier, df_downsampled, features)
+
+    @staticmethod
+    def __train_classifier(classifier, df, features):
+        X = df[features].values
+        y = df.Class.values
 
         X_train, X_test, y_train, y_test = train_test_split(X, y, test_size=.2, random_state=123)
         sc = StandardScaler()
         X_train = sc.fit_transform(X_train)
         X_test = sc.transform(X_test)
 
-        classifier = RandomForestClassifier(n_estimators=n_estimators, random_state=123)
+        print("Training model...")
+
         classifier = classifier.fit(X_train, y_train)
         print("\nAccuracy on training set: {:.3f}".format(classifier.score(X_train, y_train)))
         print("Accuracy on test set: {:.3f}".format(classifier.score(X_test, y_test)))
 
-        importance = classifier.feature_importances_
-        indices = np.argsort(importance)[::-1]
-        print("\n=== Feature ranking ===")
-        for index, feature in enumerate(features[:-1]):
-            print("%d. %s (%f)" % (index + 1, features[indices[index]], importance[indices[index]]))
+        try:
+            importance = classifier.feature_importances_
+            indices = np.argsort(importance)[::-1]
+            print("\n=== Feature ranking ===")
+            for index, feature in enumerate(features[:-1]):
+                print("%d. %s (%f)" % (index + 1, features[indices[index]], importance[indices[index]]))
+        except AttributeError:
+            print("Classifier has not contain feature_importances_ attribute")
 
         y_pred = classifier.predict(X_test)
 
