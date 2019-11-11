@@ -1,13 +1,15 @@
 from marshmallow import Schema, fields, validate, ValidationError
 
+
 class ParamSchema(Schema):
     '''Parameters validation schema'''
+
     icd10 = fields.String(validate=validate.Regexp('[a-zA-Z]\\d+\\.?\\d*'), default='')
     max_sbp = fields.Integer(validate=validate.Range(min=0, max=500), default=120)
     mean_sbp = fields.Integer(validate=validate.Range(min=0, max=500), default=120)
     sex = fields.String(validate=validate.OneOf(['male', 'female']), default='male')
     age = fields.Integer(validate=validate.Range(min=0), default=55)
-    anamnesis = fields.String(default='')    
+    anamnesis = fields.String(default='')
     height = fields.Integer(validate=validate.Range(min=0), default=165)
     weight = fields.Integer(validate=validate.Range(min=0), default=80)
     smoking = fields.Boolean(default=False)

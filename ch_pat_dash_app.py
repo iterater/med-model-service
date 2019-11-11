@@ -14,8 +14,7 @@ app.config.suppress_callback_exceptions = True
 
 
 def call_form():
-    par_to_fg = lambda par: dbc.FormGroup([dbc.Label(par['label']), 
-                                           dbc.Input(id=par['id'], value=par['default'])])
+    par_to_fg = lambda par: dbc.FormGroup([dbc.Label(par['label']), dbc.Input(id=par['id'], value=par['default'])])
     form_seq = [par_to_fg(par) for par in params]
     return dbc.Form([html.H2('Params')] + form_seq + [dbc.Button("Call", id="call_button")], id='input_from')
 
@@ -27,16 +26,13 @@ def loaded_models():
 
 def build_all_states(states):
     s_style = {'background-color': 'blanchedalmond', 'margin': '10px', 'padding': '5px'}
-    s_to_html = lambda s: [html.B(s['title']), 
-                           html.P(s['value']), 
-                           html.P(s['comment'], style={'font-size': '70%'})]
+    s_to_html = lambda s: [html.B(s['title']), html.P(s['value']), html.P(s['comment'], style={'font-size': '70%'})]
     return html.Div([html.H3('States')] + [html.Div(s_to_html(s), style=s_style) for s in states])
 
 
 def build_all_errors(errors):
     e_style = {'background-color': 'red', 'margin': '10px', 'padding': '5px'}
-    e_to_html = lambda e: [html.B('Ошибка валидации'), html.P('Параметр: '+e[0])] + \
-                          [html.P(e_msg, style={'font-size': '70%'}) for e_msg in e[1]]
+    e_to_html = lambda e: [html.B('Ошибка валидации'), html.P('Параметр: ' + e[0])] + [html.P(e_msg, style={'font-size': '70%'}) for e_msg in e[1]]
     return html.Div([html.H3('Errors')] + [html.Div(e_to_html(e), style=e_style) for e in errors])
 
 
@@ -57,9 +53,9 @@ def data_process_callback(n, input_form_content):
         return html.Div(content)
 
 
-app.layout = dbc.Container([dbc.Row([
-    dbc.Col([call_form(), html.Br(), loaded_models()]),
-    dbc.Col([html.H2('Output'), html.Div(id='output_div', children=[])])])])
+col1 = dbc.Col([call_form(), html.Br(), loaded_models()])
+col2 = dbc.Col([html.H2('Output'), html.Div(id='output_div', children=[])])
+app.layout = dbc.Container([dbc.Row([col1, col2])])
 
 if __name__ == '__main__':
     app.run_server(debug=True, use_reloader=False)

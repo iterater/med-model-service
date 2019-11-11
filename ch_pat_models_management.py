@@ -20,8 +20,9 @@ fh.setLevel(logging.WARNING)
 fh.setFormatter(formatter)
 logger.addHandler(fh)
 
+
 def load_models(basic_model_path):
-    '''Load pckled models from dir'''    
+    '''Load pckled models from dir'''
     models = []
     for fn in os.listdir(basic_model_path):
         if not fn.endswith('.pkl'):
@@ -89,6 +90,6 @@ def validate_data(data):
 
 def generate_default_data(params):
     '''Generate dictionary with default values'''
-    generated_default_data = {p['id']:p['default'] for p in params}
+    generated_default_data = {p['id']: p['default'] for p in params}
     logger.info('Generated data: {0}'.format(generated_default_data))
     return generated_default_data

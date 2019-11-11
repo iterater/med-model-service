@@ -1,6 +1,7 @@
 import json
 import pickle
 
+
 class ChPatModel:
     '''Basic class for personalized presiction.'''
 
