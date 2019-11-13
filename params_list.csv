@@ -15,7 +15,6 @@ arrhythmia,Аритмия в анамнезе,False
 stenocardia,Стенокардия в анамнезе,False
 heart_attack,ОИМ в анамнезе,False
 mean_dbp,ДАД (mean),80
-bsa,Площадь поверхности тела,1.73
 physical_activity,Не меньше 4ч.в неделю физ.нагрузки,False
 often_vegetables,Есть ли в ежедневном рационе овощи,False
 AG_drags,Постоянное упортебление антигипертензивных препаратов,False
@@ -36,9 +35,9 @@ pulse_pressure,Пульсовое давление (мм. рт.ст.),50
 carotid_wall_thickening,Утолщение стенки сонных артерий,False
 pulse_wave_velocity,Скорость пульсовой волны («каротидно-феморальной»),9
 ankle_brachia_sbp_index,Лодыжечно-плечевой индекс СД,1.5
-chronic_kidney_disease, Стадия ХБП (0 - если нет), 0
+chronic_kidney_disease, Стадия ХБП (0 - если нет),0
 microalbuminuria,Микроальбуминурия (есть/нет),False
 cerebrovascular_disease,Цереброваскулярная болезнь,False
 coronary_heart_disease,Ишемическая болезнь сердца,False
-heart_failure,Стадия сердечной недостаточности (0 - если нет), 0
+heart_failure,Стадия сердечной недостаточности (0 - если нет),0
 severe_retinopathy,Тяжелая ретинопатия,False

@@ -9,11 +9,11 @@ warnings.filterwarnings("ignore")
 class DiabetesPrediction(ChPatModel):
     def __init__(self):
         self._model_description = 'DM risk for 5 years'
-        self._need_features = ['bmi', 'mean_dbp', 'age', 'mean_sbp', "weight", "bsa"]
+        self._need_features = ['bmi', 'mean_dbp', 'age', 'mean_sbp', "weight","bsa"]
         self._model_file = 'DiabetesRisk/DiabetesPrediction.pkl'
         self._model = 'Diab5YearsRisk'
         self._fname = "diab_5_years_risk.pkl"
-        self.comment = "Расcчитан в результате предсказательного моделирования,достоверность 80%"
+        self.comment = "Расcчитан в результате предсказательного моделирования, достоверность 80%"
 
     def take_features(self, patient_dict):
         def float_value(value, feat):
@@ -27,20 +27,22 @@ class DiabetesPrediction(ChPatModel):
                 return value
 
         def ValueIsCorrect(Value):
-            CorrectStrValues = ["True", "False","male","female"]
+            CorrectStrValues = ["True", "False", "male", "female"]
             return (str(Value).replace(".", "", 1).isdigit()) | (str(Value) in CorrectStrValues)
 
         feat_for_model = {feat: float_value(value, feat) for feat, value in zip(patient_dict, patient_dict.values()) if
                           (feat in self._need_features) & (ValueIsCorrect(value))}
 
         if ("weight" in patient_dict) & ("height" in patient_dict):
-            if ValueIsCorrect(patient_dict["weight"])&ValueIsCorrect(patient_dict["height"]):
+            if ValueIsCorrect(patient_dict["weight"]) & ValueIsCorrect(patient_dict["height"]):
                 feat_for_model['bmi'] = int(patient_dict["weight"]) / (int(patient_dict["height"]) / 100) ** 2
+                feat_for_model['bsa'] = (int(patient_dict["weight"]) ** (0.425)) * (
+                            int(patient_dict["height"]) ** (0.725)) * 0.007184
         return feat_for_model
 
     def check_applicability(self, patient_dict, take_features=take_features):
         feat_for_model = take_features(self, patient_dict)
-        return len(feat_for_model) == len(self._need_features)
+        return len(feat_for_model) >= len(self._need_features)
 
     def diab_predict(self, patient_dict, take_features=take_features):
         feat_for_model = take_features(self, patient_dict)
