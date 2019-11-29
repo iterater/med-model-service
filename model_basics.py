@@ -33,7 +33,7 @@ class StubStateModel(ChPatModel):
         res_dict['states'].append({'title': 'Тест', 'value': 'ОК', 'comment': 'Тестовая модель отработала'})
         return res_dict
 
-if __name__ == '__main__':
+def store_all_models():
     # train and store models
     m1 = BasicAHModel()
     m1.store_model('models\\test_ah_model.pkl')

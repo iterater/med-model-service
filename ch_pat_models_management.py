@@ -26,9 +26,13 @@ def load_models(basic_model_path):
     for fn in os.listdir(basic_model_path):
         if not fn.endswith('.pkl'):
             continue
-        m = pickle.load(open(os.path.join(basic_model_path, fn), 'br'))
-        logger.info('Loading model: {0}'.format(m.model_description))
-        models.append(m)
+        try:
+            m = pickle.load(open(os.path.join(basic_model_path, fn), 'br'))
+            logger.info('Loading model: {0}'.format(m.model_description))
+            models.append(m)
+        except Exception as e:
+            logger.error('Pickle \'{0}\' loading failed with exception {1}'.format(fn, e))
+        
     return models
 
 
