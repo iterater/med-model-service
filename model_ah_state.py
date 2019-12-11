@@ -55,6 +55,8 @@ class StateAHModel(ChPatModel):
             return eval(value)
         except NameError:
             return value
+        except SyntaxError:
+            return value
 
     def apply(self, patient_dict):
         # TODO: добавить заполнение пропусков

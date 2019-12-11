@@ -17,7 +17,7 @@ class CHFRiskModel(ChPatModel):
                            'left_ventricular_hypertrophy', 'left_atrial_expansion', 'blood_group',
                            'mean_sbp', 'max_sbp', 'min_sbp', 'std_sbp', 'mean_dbp', 'max_dbp',
                            'min_dbp', 'std_dbp', 'waistline', 'bmi', 'bsa', 'diabetes',
-                            'obesity', 'coronary_heart_disease', 'heart_attack',
+                            'coronary_heart_disease', 'heart_attack',
                                 ]
 
         self.categorical_features = ['sex', 'alcohol_regularity',]
@@ -28,7 +28,7 @@ class CHFRiskModel(ChPatModel):
 
     def check_applicability(self, patient_dict):
         if len(self.features) == len(set(patient_dict.keys()).intersection(set(self.features))):
-            print(len(set(patient_dict.keys()).intersection(set(self.features))))
+            # print(len(set(patient_dict.keys()).intersection(set(self.features))))
             return all(map(lambda col: col in patient_dict and patient_dict[col] != 'None',
                        self.features))
         else:
@@ -46,9 +46,24 @@ class CHFRiskModel(ChPatModel):
             else:
                 return float(value)
 
+    def check_obesity(self, bmi):
+        if float(bmi) > 30:
+            return True
+        else:
+            return False
+
 
     def apply(self, patient_dict):
+        patient_dict['obesity'] = self.check_obesity(patient_dict['bmi'])
         res_dict = patient_dict.copy()
+        #обновление признаков с сохранением порядка, не изменять
+        self.features = ['sex', 'age', 'height', 'weight', 'smoke', 'smoking',
+                         'alcohol_regularity', 'left_ventricular_ejection_fraction',
+                         'left_ventricular_hypertrophy', 'left_atrial_expansion', 'blood_group',
+                         'mean_sbp', 'max_sbp', 'min_sbp', 'std_sbp', 'mean_dbp', 'max_dbp',
+                         'min_dbp', 'std_dbp', 'waistline', 'bmi', 'bsa', 'diabetes',
+                         'obesity', 'coronary_heart_disease', 'heart_attack',
+                         ]
         if self.result_name not in res_dict:
             res_dict[self.result_name] = []
 

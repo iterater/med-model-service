@@ -29,7 +29,6 @@ waistline,Объем талии,90
 degree_kinship_with_diabetic,Степень родства с диабетиком,0
 high_glucose,Наблюдалась ли повышенная глюкоза крови,False
 coronary_heart_disease,Ишемическая болезнь сердца в анамнезе,False
-obesity,Ожирение,False
 diabetes,Сахарный диабет,False
 bmi,Индекс массы тела,26.18
 blood_group,Группа крови,1
