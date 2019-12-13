@@ -1,4 +1,6 @@
 import pytest
+import socket
+import requests
 from ch_pat_models_management import load_params, generate_default_data
 from model_basics import StubStateModel, BasicAHModel
 
@@ -52,3 +54,20 @@ def test_BasicAHModel_application(generate_test_data_for_ah_model):
             out_dict = model.apply(in_dict)
             state_flag = any((state['title'] == 'Монитор давления') and (state['value'] == '>140') for state in out_dict['states'])
             assert state_flag == high_blood_pressure_flag
+
+
+@pytest.fixture(scope='session')
+def generate_local_service_url():
+    address = socket.gethostbyname(socket.gethostname())
+    sock = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
+    result = sock.connect_ex((address,5000))
+    assert result == 0
+    sock.close()
+    return 'http://{0}:5000/ch_pat_service'.format(address)
+
+
+def test_external_call(generate_test_data_for_stub_model, generate_local_service_url):
+    url = generate_local_service_url
+    for in_dict in generate_test_data_for_stub_model:
+        resp = requests.post(url, json=in_dict)
+        assert resp.status_code == 200        

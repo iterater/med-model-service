@@ -1,7 +1,9 @@
-from marshmallow import Schema, fields, validate, ValidationError
+from marshmallow import Schema, fields, validate, ValidationError, INCLUDE
 
 class ParamSchema(Schema):
     '''Parameters validation schema'''
+    class Meta:
+        unknown = INCLUDE
     icd10 = fields.String(validate=validate.Regexp('[a-zA-Z]\\d+\\.?\\d*'), default='')
     max_sbp = fields.Integer(validate=validate.Range(min=0, max=500), default=120)
     mean_sbp = fields.Integer(validate=validate.Range(min=0, max=500), default=120)

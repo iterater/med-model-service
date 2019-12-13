@@ -25,4 +25,4 @@ def main_ui():
     return render_template('main_template.html', fields=[[p['id'], p['label']] for p in params])
 
 if __name__ == '__main__':
-    app.run(port=5000, debug=True, use_reloader=False)
+    app.run(host='0.0.0.0', port=5000, debug=True, use_reloader=False)
