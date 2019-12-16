@@ -1,12 +1,16 @@
 from flask import Flask, request, jsonify, render_template
 import ch_pat_models_management
+from flask_cors import CORS, cross_origin
 
 models = ch_pat_models_management.load_models('models')
 params = ch_pat_models_management.load_params('params_list.csv')
 
 app = Flask(__name__)
+cors = CORS(app)
+app.config['CORS_HEADERS'] = 'Content-Type'
 
 @app.route('/ch_pat_service', methods=['POST', 'GET'])
+@cross_origin()
 def main_service():
     data = request.args.to_dict() if request.method == 'GET' else request.get_json(force=True)
     data = ch_pat_models_management.call_models(data, models)
