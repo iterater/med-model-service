@@ -6,6 +6,7 @@ import datetime as dt
 from ch_pat_param_schema import ParamSchema
 
 # logging setup
+# os.chdir(r'C:\__WORK\Projects_AH\chronic-patient-model-service-colored')
 logger = logging.getLogger(__name__)
 logger.setLevel(logging.INFO)
 formatter = logging.Formatter('%(asctime)s - %(message)s')
@@ -46,6 +47,7 @@ def call_models(data, models):
         return data
     else:
         logger.info('Validation passed')
+    data = ParamSchema().load(data)    
     has_applicable_models = True
     model_application_flag = [False] * len(models)
     while has_applicable_models:

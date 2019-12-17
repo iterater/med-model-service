@@ -2,6 +2,7 @@ from flask import Flask, request, jsonify, render_template
 import ch_pat_models_management
 from flask_cors import CORS, cross_origin
 
+
 models = ch_pat_models_management.load_models('models')
 params = ch_pat_models_management.load_params('params_list.csv')
 
@@ -30,3 +31,4 @@ def main_ui():
 
 if __name__ == '__main__':
     app.run(host='0.0.0.0', port=5000, debug=True, use_reloader=False)
+    # app.run(host='localhost', port=5000, debug=True, use_reloader=False)

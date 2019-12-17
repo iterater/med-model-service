@@ -2,12 +2,16 @@ id,label,default
 icd10,МКБ-10,I10
 max_sbp,САД (max),120
 mean_sbp,САД (mean),110
+min_sbp,САД (min),100
+std_sbp,САД (std),5
 sex,Пол (male/female),female
 age,Возраст,55
 anamnesis,Анамнез,
 height,Рост,165
 weight,Вес,60
 smoking,Статус курения,False
+smoke,Курение в прошлом,False
+num_packs_smoke,Количество выкуренных пачек сигарет в день,0
 alcohol_regularity,Частота употребления алкоголя,rarely
 creatinine_level,Креатинин,2
 effusions,Выпоты в анамнезе,False
@@ -15,6 +19,10 @@ arrhythmia,Аритмия в анамнезе,False
 stenocardia,Стенокардия в анамнезе,False
 heart_attack,ОИМ в анамнезе,False
 mean_dbp,ДАД (mean),80
+max_dbp,ДАД (max),100
+min_dbp,ДАД (min),50
+std_dbp,ДАД (std),5
+bsa,Площадь поверхности тела,1.73
 physical_activity,Не меньше 4ч.в неделю физ.нагрузки,False
 often_vegetables,Есть ли в ежедневном рационе овощи,False
 AG_drags,Постоянное упортебление антигипертензивных препаратов,False
@@ -41,3 +49,9 @@ cerebrovascular_disease,Цереброваскулярная болезнь,Fals
 coronary_heart_disease,Ишемическая болезнь сердца,False
 heart_failure,Стадия сердечной недостаточности (0 - если нет),0
 severe_retinopathy,Тяжелая ретинопатия,False
+diabetes,Сахарный диабет,False
+bmi,Индекс массы тела,26.18
+blood_group,Группа крови,1
+left_ventricular_ejection_fraction,Фракция выброса ЛЖ,57
+left_ventricular_hypertrophy,Гипертрофия ЛЖ,False
+left_atrial_expansion,Расширение ЛП,False
