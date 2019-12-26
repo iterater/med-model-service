@@ -48,15 +48,8 @@ class StateAHModel(ChPatModel):
         if value is None:
             raise ValueError
         if self.feature_coding.get(col_name):
-            return self.feature_coding[col_name][self.try_cast(value)]
+            return self.feature_coding[col_name][value]
         return value
-
-    @staticmethod
-    def try_cast(value):
-        try:
-            return eval(value)
-        except NameError:
-            return value
 
     def apply(self, patient_dict):
         try:
@@ -72,11 +65,18 @@ class StateAHModel(ChPatModel):
         if self.result_name not in res_dict:
             res_dict[self.result_name] = []
         # TODO: добавить комментарий к болезни
-        res_dict[self.result_name].append({'title': 'Класс АГ',
-                                           'comment': 'Класс характеризуется повышенным риском...'}
-                                          )
+        my_prediction = {'title': 'Диагностика артериальной гипертензии',
+                                           'top_comment': 'Информация',
+                                           'color': 'green',
+                                           'source': 'Используется предсказательная модель (достоверность 83%)'}
+
+        value = '№2' if state else '№1'
+        comment = 'Наиболее вероятный тип АГ {}'.format(value)
         if state:
-            res_dict[self.result_name][-1]['value'] = '№2'
-        else:
-            res_dict[self.result_name][-1]['value'] = '№1'
+            comment += '. Необходимо провести дополнительные скрининговые обследования'
+        my_prediction['value'] = value
+        my_prediction['comment'] = comment
+        # print('AH result', my_prediction)
+        res_dict[self.result_name].append(my_prediction
+                                          )
         return res_dict

@@ -9,7 +9,7 @@ warnings.filterwarnings("ignore")
 class DiabetesPrediction(ChPatModel):
     def __init__(self):
         self._model_description = 'DM risk for 5 years'
-        self._need_features = ['bmi', 'mean_dbp', 'age', 'mean_sbp', "weight","bsa"]
+        self._need_features = ['bmi', 'mean_dbp', 'age', 'mean_sbp', "weight", "bsa"]
         self._model_file = 'DiabetesRisk/DiabetesPrediction.pkl'
         self._model = 'Diab5YearsRisk'
         self._fname = "diab_5_years_risk.pkl"
@@ -37,7 +37,7 @@ class DiabetesPrediction(ChPatModel):
             if ValueIsCorrect(patient_dict["weight"]) & ValueIsCorrect(patient_dict["height"]):
                 feat_for_model['bmi'] = int(patient_dict["weight"]) / (int(patient_dict["height"]) / 100) ** 2
                 feat_for_model['bsa'] = (int(patient_dict["weight"]) ** (0.425)) * (
-                            int(patient_dict["height"]) ** (0.725)) * 0.007184
+                        int(patient_dict["height"]) ** (0.725)) * 0.007184
         return feat_for_model
 
     def check_applicability(self, patient_dict, take_features=take_features):
@@ -56,12 +56,22 @@ class DiabetesPrediction(ChPatModel):
         probability_to_percent = str(round(probability * 100, 0)) + "%"
 
         if predict:
-            risk_text = "Высокий риск"
+            risk_text = "Высокий"
+            color = "red"
+            top_comment = 'Опасное состояние'
         else:
-            risk_text = "Невысокий риск"
+            risk_text = "Невысокий"
+            color = 'green'
+            top_comment = 'Информация'
 
-        return {'title': '5-летний риск сахарного диабета 2 типа', 'value': probability_to_percent,
-                'risk_text': risk_text, 'comment': self.comment}
+        return {'title': '5-летний риск развития сахарного диабета 2 типа',
+                'value': probability_to_percent,
+                'risk_text': risk_text,
+                'comment': self.comment,
+                'source': "Используется предсказательная модель (достоверность 80%)",
+                'color': color,
+                'top_comment': top_comment
+                }
 
     def findrisk_func(self, patient_dict, take_features=take_features):
         feat_for_model = take_features(self, patient_dict)
@@ -86,14 +96,26 @@ class DiabetesPrediction(ChPatModel):
         probability = ScoreInfindrisk(Feature=feat_for_model['sex'], Value=SumScore, dictionary=findrisk)
 
         if SumScore <= 12:
-            risk_text = "Низкий риск"
+            risk_text = "Низкий"
+            color = 'green'
+            top_comment = 'Информация'
         elif (SumScore > 12) & (SumScore <= 20):
-            risk_text = "Умеренный риск"
+            risk_text = "Умеренный"
+            color = 'yellow'
+            top_comment = 'Внимание'
         elif SumScore > 20:
-            risk_text = "Высокий риск"
+            risk_text = "Высокий"
+            color = 'red'
+            top_comment = 'Опасное состояние'
 
-        return {'title': '10-летний риск сахарного диабета 2 типа', 'value': probability,
-                'risk_text': risk_text, 'comment': self.comment, 'SumScore': SumScore}
+        return {'title': '10-летний риск развития сахарного диабета 2 типа',
+                'value': probability,
+                'risk_text': risk_text,
+                'comment': self.comment,
+                'SumScore': 'SumScoreб',
+                'color' : color,
+                'top_comment' : top_comment,
+                'source' : 'Источник: шкала FINDRISK (достоверность 85%)'}
 
     predict_models = {'Diab5YearsRisk': diab_predict, "FINDRISK": findrisk_func}
 
@@ -119,7 +141,7 @@ class FINDRISK(DiabetesPrediction):
                                'high_glucose']
         self._model_file = 'DiabetesRisk/FINDRISK.pkl'
         self._model = "FINDRISK"
-        self.comment = "Расcчитан c помощью шкалы FINDRISK, достоверность 85%"
+        self.comment = "Расcчитан c помощью шкалы FINDRISK (достоверность 85%)"
         self._fname = "findrisk.pkl"
 
     def show_model_description_full(self):

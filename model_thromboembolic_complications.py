@@ -5,8 +5,8 @@ import os
 
 
 class ThromboembolicComplicationsScaleModel(ChPatModel):
-
     """Model for predicting the thromboembolic complications in atrial fibrillation (based on the scale)"""
+
     def __init__(self):
         super().__init__()
 
@@ -25,21 +25,37 @@ class ThromboembolicComplicationsScaleModel(ChPatModel):
         diagnosis = str(patient_dict['anamnesis'])
 
         info = PatientInfo(age=age, sex=sex, diagnosis=diagnosis)
-        risk_point = Estimator.calculate_risk_point(data=info)
+        feature, risk_point = Estimator.calculate_risk_point(data=info)
         complications_frequency = Estimator.find_complications_frequency(risk_point)
+
+        if complications_frequency < 2:
+            top_comment = 'Информация'
+            color = 'green'
+        elif complications_frequency < 9:
+            top_comment = 'Опасное состояние'
+            color = 'red'
+        else:
+            top_comment = 'Тяжелое состояние'
+            color = 'red'
 
         res_dict['states'].append(
             {
-                'title': 'Сумма баллов по шкале CHA2DS2-VASc',
+                'title': 'Оценка риска тромбоэмболических осложнений у больных с фибрилляцией/трепетанием предсердий',
                 'value': risk_point,
-                'comment': Estimator.category(risk_point)
+                'comment': Estimator.category(risk_point),
+                'source': 'Источник: шкала CHA2DS2-VASc',
+                'top_comment': top_comment,
+                'color': color
             }
         )
         res_dict['states'].append(
             {
                 'title': 'Ожидаемая частота инсультов за год',
                 'value': str(complications_frequency) + '%',
-                'comment': 'Рекомендуется: ' + Estimator.therapy(risk_point)
+                'comment': 'Рекомендуется принимать ' + Estimator.therapy(risk_point),
+                'source': 'Источник: шкала CHA2DS2-VASc',
+                'top_comment': top_comment,
+                'color': color
             }
         )
         return res_dict
@@ -77,15 +93,29 @@ class ThromboembolicComplicationsModel(ChPatModel):
         feature, risk_point = Estimator.calculate_risk_point(data=info)
         predicted_class = self.classifier.predict([
             [age, 1 if patient_dict['sex'] == 'female' else 0, feature.stroke_feature,
-             feature.arterial_hypertension_feature, feature.diabetes_feature, feature.heart_failure_feature, feature.vascular_disease_feature ]
+             feature.arterial_hypertension_feature, feature.diabetes_feature, feature.heart_failure_feature,
+             feature.vascular_disease_feature]
         ])
         complications_frequency = Estimator.find_complications_frequency(risk_point)
+
+        if predicted_class[0] == 1:
+            value = 'Высокий'
+            color = 'red'
+            top_comment = 'Опасное состояние'
+        else:
+            value = 'Низкий'
+            color = 'green'
+            top_comment = 'Информация'
 
         res_dict['states'].append(
             {
                 'title': 'Риск возникновения тромбоэмболических осложнений',
-                'value': 'Высокий' if predicted_class[0] == 1 else 'Низкий',
-                'comment': 'Ожидаемая частота инсультов за год ' + str(complications_frequency) + '%'
+                'value': value,
+                'comment': 'Ожидаемая частота инсультов за год ' + str(complications_frequency) + '%',
+                'source': 'Используется предсказательная модель классификации',
+                'risk_text': value,
+                'color': color,
+                'top_comment': top_comment
             }
         )
         return res_dict
@@ -110,9 +140,8 @@ class ThromboembolicComplicationsModel(ChPatModel):
         else:
             model = ClassificationModelFactory.create_model(df_path=model_path, n_estimators=100)
 
-        print("===> Saving the ready model...")
+        # print("===> Saving the ready model...")
         pickle.dump(model, open(self._ready_classifier_path, 'wb'))
-        print("Done.")
+        # print("Done.")
 
         return model
-
