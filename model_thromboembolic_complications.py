@@ -65,19 +65,44 @@ class ThromboembolicComplicationsModel(ChPatModel):
 
     def __init__(self):
         super().__init__()
-
-        self._features_file_path = 'ThromboembolicComplications/Table2Object174part1.txt'
-        self._persons_file_path = 'ThromboembolicComplications/Table2Download153ObjectFeatures.txt'
         self._model_description = 'Thromboembolic complications predicting model'
-        self._ready_classifier_path = 'ThromboembolicComplications/rfc_model.pkl'
-
-        if not os.path.isfile(self._ready_classifier_path):
-            self.classifier = self.__create_classifier()
-        else:
-            self.classifier = pickle.load(open(self._ready_classifier_path, 'rb'))
+        self.classifier_type = 'rf'
 
     def check_applicability(self, patient_dict):
         return ('age' in patient_dict) and ('sex' in patient_dict) and ('anamnesis' in patient_dict)
+
+    def apply(self, patient_dict):
+        return self.create_model_if_needed().apply(patient_dict)
+
+    def create_model_if_needed(self):
+        return _ThromboembolicFactoryComplicationsModel(classifier_type=self.classifier_type)
+
+
+class _ThromboembolicFactoryComplicationsModel:
+
+    """
+    Creates a new factory model.
+
+    Parameters
+    ----------
+    classifier_type : string, optional (default='rf')
+        Specifies the type of classifier.
+        It must be one of 'rf', 'svm', 'gb', 'mlp'.
+        If none is given, 'rf' will be used.
+    """
+    def __init__(self, classifier_type='rf'):
+        super().__init__()
+
+        self._features_file_path = 'ThromboembolicComplications/Table2Object174part1.txt'
+        self._persons_file_path = 'ThromboembolicComplications/Table2Download153ObjectFeatures.txt'
+        self._ready_classifier_path = 'ThromboembolicComplications/' + classifier_type + '_model.pkl'
+
+        if not os.path.isfile(self._ready_classifier_path):
+            print("Creating a model")
+            self.classifier = self.__create_classifier()
+        else:
+            self.classifier = pickle.load(open(self._ready_classifier_path, 'rb'))
+            print("The model was loaded")
 
     def apply(self, patient_dict):
         res_dict = patient_dict.copy()

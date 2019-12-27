@@ -7,6 +7,7 @@ from ThromboembolicComplications.PatientInfo import PatientInfo
 from sklearn.model_selection import train_test_split
 from sklearn.utils import resample
 from sklearn.preprocessing import StandardScaler
+from sklearn.neural_network import MLPClassifier
 from sklearn.ensemble import RandomForestClassifier
 from sklearn.ensemble import GradientBoostingClassifier
 from sklearn.svm import SVC
@@ -86,14 +87,14 @@ class ClassificationModelFactory:
 
         return model
 
-    '''
+    """
     Creates a new classifier model.
     
     Parameters
     ----------
     classifier_type : string, optional (default='rf')
         Specifies the type of classifier.
-        It must be one of 'rf', 'svm', 'gb'.
+        It must be one of 'rf', 'svm', 'gb', 'mlp'.
         If none is given, 'rf' will be used.
         
     df : dataframe, optional (default='None')
@@ -106,7 +107,7 @@ class ClassificationModelFactory:
         
     n_estimators : integer, optional (default=100)
         The number of estimators in RF and GB classifiers.
-    '''
+    """
     @staticmethod
     def create_model(classifier_type="rf", df=None, df_path=None, n_estimators=100):
 
@@ -139,6 +140,8 @@ class ClassificationModelFactory:
             classifier = SVC()
         elif classifier_type == 'gb':
             classifier = GradientBoostingClassifier(n_estimators=n_estimators, random_state=123)
+        elif classifier_type == 'mlp':
+            classifier = MLPClassifier(alpha=1, max_iter=1000)
         else:
             classifier = RandomForestClassifier(n_estimators=n_estimators, random_state=123)
 
