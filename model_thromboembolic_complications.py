@@ -66,7 +66,7 @@ class ThromboembolicComplicationsModel(ChPatModel):
     def __init__(self):
         super().__init__()
         self._model_description = 'Thromboembolic complications predicting model'
-        self.classifier_type = 'rf'
+        self.classifier_type = 'dt'
 
     def check_applicability(self, patient_dict):
         return ('age' in patient_dict) and ('sex' in patient_dict) and ('anamnesis' in patient_dict)
@@ -87,8 +87,8 @@ class _ThromboembolicFactoryComplicationsModel:
     ----------
     classifier_type : string, optional (default='rf')
         Specifies the type of classifier.
-        It must be one of 'rf', 'svm', 'gb', 'mlp'.
-        If none is given, 'rf' will be used.
+        It must be one of 'rf', 'svm', 'gb', 'dt'.
+        If none or undefined value is given, 'rf' will be used.
     """
     def __init__(self, classifier_type='rf'):
         super().__init__()
@@ -96,6 +96,7 @@ class _ThromboembolicFactoryComplicationsModel:
         self._features_file_path = 'ThromboembolicComplications/Table2Object174part1.txt'
         self._persons_file_path = 'ThromboembolicComplications/Table2Download153ObjectFeatures.txt'
         self._ready_classifier_path = 'ThromboembolicComplications/' + classifier_type + '_model.pkl'
+        self.classifier_type = classifier_type
 
         if not os.path.isfile(self._ready_classifier_path):
             print("Creating a model")
@@ -161,9 +162,11 @@ class _ThromboembolicFactoryComplicationsModel:
                 model_path=model_path,
                 updated_model_path=model_path
             )
-            model = ClassificationModelFactory.create_model(df=classified_model, n_estimators=100)
+            model = ClassificationModelFactory.create_model(classifier_type=self.classifier_type, df=classified_model,
+                                                            n_estimators=100)
         else:
-            model = ClassificationModelFactory.create_model(df_path=model_path, n_estimators=100)
+            model = ClassificationModelFactory.create_model(classifier_type=self.classifier_type, df_path=model_path,
+                                                            n_estimators=100)
 
         # print("===> Saving the ready model...")
         pickle.dump(model, open(self._ready_classifier_path, 'wb'))

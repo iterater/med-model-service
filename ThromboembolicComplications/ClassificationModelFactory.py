@@ -7,9 +7,8 @@ from ThromboembolicComplications.PatientInfo import PatientInfo
 from sklearn.model_selection import train_test_split
 from sklearn.utils import resample
 from sklearn.preprocessing import StandardScaler
-from sklearn.neural_network import MLPClassifier
-from sklearn.ensemble import RandomForestClassifier
-from sklearn.ensemble import GradientBoostingClassifier
+from sklearn.ensemble import RandomForestClassifier, GradientBoostingClassifier
+from sklearn.tree import DecisionTreeClassifier
 from sklearn.svm import SVC
 from sklearn.metrics import classification_report, confusion_matrix, accuracy_score
 
@@ -94,8 +93,8 @@ class ClassificationModelFactory:
     ----------
     classifier_type : string, optional (default='rf')
         Specifies the type of classifier.
-        It must be one of 'rf', 'svm', 'gb', 'mlp'.
-        If none is given, 'rf' will be used.
+        It must be one of 'rf', 'svm', 'gb', 'dt'.
+        If none or undefuned value is given, 'rf' will be used.
         
     df : dataframe, optional (default='None')
         Dataframe for training.
@@ -136,12 +135,14 @@ class ClassificationModelFactory:
         # Combine minority class with downsampled majority class
         df_downsampled = pd.concat([df_majority_downsampled, df_minority])
 
+        print("Using", classifier_type, "classifier")
+
         if classifier_type == 'svc':
             classifier = SVC()
         elif classifier_type == 'gb':
             classifier = GradientBoostingClassifier(n_estimators=n_estimators, random_state=123)
-        elif classifier_type == 'mlp':
-            classifier = MLPClassifier(alpha=1, max_iter=1000)
+        elif classifier_type == 'dt':
+            classifier = DecisionTreeClassifier(random_state=123)
         else:
             classifier = RandomForestClassifier(n_estimators=n_estimators, random_state=123)
 
