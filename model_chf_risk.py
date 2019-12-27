@@ -27,9 +27,7 @@ class CHFRiskModel(ChPatModel):
                       ' с достоверностью 73% (f1-score)'
 
     def check_applicability(self, patient_dict):
-        # print('ХСН привет')
         if len(self.features) == len(set(patient_dict.keys()).intersection(set(self.features))):
-            # print(len(set(patient_dict.keys()).intersection(set(self.features))))
             return all(map(lambda col: col in patient_dict and patient_dict[col] != 'None',
                            self.features))
         else:
