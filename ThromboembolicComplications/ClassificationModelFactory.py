@@ -93,7 +93,7 @@ class ClassificationModelFactory:
     ----------
     classifier_type : string, optional (default='rf')
         Specifies the type of classifier.
-        It must be one of 'rf', 'svm', 'gb', 'dt'.
+        It must be one of 'rf', 'svc', 'gb', 'dt'.
         If none or undefuned value is given, 'rf' will be used.
         
     df : dataframe, optional (default='None')

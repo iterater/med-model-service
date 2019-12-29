@@ -66,7 +66,7 @@ class ThromboembolicComplicationsModel(ChPatModel):
     def __init__(self):
         super().__init__()
         self._model_description = 'Thromboembolic complications predicting model'
-        self.classifier_type = 'dt'
+        self.classifier_type = 'rf'
 
     def check_applicability(self, patient_dict):
         return ('age' in patient_dict) and ('sex' in patient_dict) and ('anamnesis' in patient_dict)
@@ -87,7 +87,7 @@ class _ThromboembolicFactoryComplicationsModel:
     ----------
     classifier_type : string, optional (default='rf')
         Specifies the type of classifier.
-        It must be one of 'rf', 'svm', 'gb', 'dt'.
+        It must be one of 'rf', 'svc', 'gb', 'dt'.
         If none or undefined value is given, 'rf' will be used.
     """
     def __init__(self, classifier_type='rf'):
