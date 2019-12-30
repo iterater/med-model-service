@@ -8,6 +8,7 @@ import model_chf_outcome
 import model_chf_trans_heart
 import model_chf_strokes
 import model_chf_takhikardia
+import model_other_dias_prediction
 
 #import pickle
 
@@ -33,8 +34,20 @@ test_model = model_chf_takhikardia.CHFTakhClassifier()
 test_model.store_model('models\\chf_takh_model.pkl')
 test_model = model_chf_risk.CHFRiskModel()
 test_model.store_model('models\\chf_risk.pkl')
-
-
+test_model = model_other_dias_prediction.E063Model()
+test_model.store_model('models\\E063Model.pkl')
+test_model = model_other_dias_prediction.I48Model()
+test_model.store_model('models\\I48Model.pkl')
+test_model = model_other_dias_prediction.I50Model()
+test_model.store_model('models\\I50Model.pkl')
+test_model = model_other_dias_prediction.I65_2Model()
+test_model.store_model('models\\I65_2Model.pkl')
+test_model = model_other_dias_prediction.I67_2Model()
+test_model.store_model('models\\I67_2Model.pkl')
+test_model = model_other_dias_prediction.M42_1Model()
+test_model.store_model('models\\M42_1Model.pkl')
+test_model = model_other_dias_prediction.AcuteHeartAttackModel()
+test_model.store_model('models\\AcuteHeartAttackModel.pkl')
 # Test 2: running flask app
 # import requests
 # url = 'http://localhost:5000/ch_pat_service'
