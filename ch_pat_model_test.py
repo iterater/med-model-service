@@ -4,6 +4,10 @@ import model_thromboembolic_complications
 import model_diab_predict
 import model_score
 import model_chf_risk
+import model_chf_outcome
+import model_chf_trans_heart
+import model_chf_strokes
+import model_chf_takhikardia
 import model_other_dias_prediction
 
 #import pickle
@@ -20,6 +24,14 @@ test_model = model_score.ScoreModel()
 test_model.store_model('models\\scoreModel.pkl')
 test_model = model_score.TotalRiskModel()
 test_model.store_model('models\\TotalRiskModel.pkl')
+test_model = model_chf_outcome.CHFOutcomeClassifier()
+test_model.store_model('models\\chf_outcome_model.pkl')
+test_model = model_chf_trans_heart.CHFTransHeartClassifier()
+test_model.store_model('models\\chf_trans_heart_model.pkl')
+test_model = model_chf_strokes.CHFStrokeClassifier()
+test_model.store_model('models\\chf_stroke_model.pkl')
+test_model = model_chf_takhikardia.CHFTakhClassifier()
+test_model.store_model('models\\chf_takh_model.pkl')
 test_model = model_chf_risk.CHFRiskModel()
 test_model.store_model('models\\chf_risk.pkl')
 test_model = model_other_dias_prediction.E063Model()
