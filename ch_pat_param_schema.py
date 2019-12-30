@@ -1,9 +1,12 @@
 from marshmallow import Schema, fields, validate, ValidationError, INCLUDE
 
+
 class ParamSchema(Schema):
     '''Parameters validation schema'''
+
     class Meta:
         unknown = INCLUDE
+
     icd10 = fields.String(validate=validate.Regexp('[a-zA-Z]\\d+\\.?\\d*'), default='')
     max_sbp = fields.Integer(validate=validate.Range(min=0, max=500), default=120)
     mean_sbp = fields.Integer(validate=validate.Range(min=0, max=500), default=120)
@@ -17,12 +20,43 @@ class ParamSchema(Schema):
     smoking = fields.Boolean(default=False)
     smoke = fields.Boolean(default=False)
     num_packs_smoke = fields.Float(default=0.)
-    alcohol_regularity = fields.String(validate=validate.OneOf(['regular', 'weekly', 'rarely', 'deny']), default='rarely')
+    alcohol_regularity = fields.String(validate=validate.OneOf(['regular', 'weekly', 'rarely', 'deny']),
+                                       default='rarely')
     creatinine_level = fields.Integer(validate=validate.Range(min=0))
     effusions = fields.Boolean(default=False)
     arrhythmia = fields.Boolean(default=False)
     stenocardia = fields.Boolean(default=False)
     heart_attack = fields.Boolean(default=False)
+
+    E06_3_mkb = fields.Boolean(default=False)
+    I48_mkb = fields.Boolean(default=False)
+    I65_2_mkb = fields.Boolean(default=False)
+    I67_2_mkb = fields.Boolean(default=False)
+    M42_1_mkb = fields.Boolean(default=False)
+    I50_mkb = fields.Boolean(default=False)
+
+    LYM_blood_level = fields.Float(validate=validate.Range(min=0), default=30.16)
+    MCV_blood_level = fields.Float(validate=validate.Range(min=0), default=88.5)
+    MPW_blood_level = fields.Float(validate=validate.Range(min=0), default=8.8)
+    NEUT_blood_level = fields.Float(validate=validate.Range(min=0), default=57.9)
+    PCT_blood_level = fields.Float(validate=validate.Range(min=0), default=0.19)
+    PDW_blood_level = fields.Float(validate=validate.Range(min=0), default=16.2)
+    PLT_blood_level = fields.Float(validate=validate.Range(min=0), default=226)
+    RDW_blood_level = fields.Float(validate=validate.Range(min=0), default=12.7)
+    S_G_level = fields.Float(validate=validate.Range(min=0), default=12.75)
+    pH_blood_level = fields.Float(validate=validate.Range(min=0), default=5.7)
+    ALT_level = fields.Float(validate=validate.Range(min=0), default=23.17)
+    HCT_blood_level = fields.Float(validate=validate.Range(min=0), default=41.2)
+    HGB_blood_level = fields.Float(validate=validate.Range(min=0), default=138)
+    LUM_blood_level = fields.Float(validate=validate.Range(min=0), default=2.03)
+    MCH_blood_level = fields.Float(validate=validate.Range(min=0), default=29.7)
+    WBC_blood_level = fields.Float(validate=validate.Range(min=0), default=7)
+    ACT_blood_level = fields.Float(validate=validate.Range(min=0), default=21.73)
+
+    bilirubin_level = fields.Float(validate=validate.Range(min=0), default=12)
+    troponin_level = fields.Float(validate=validate.Range(min=0), default=0.08)
+    glucose_level = fields.Float(validate=validate.Range(min=0), default=5.6)
+
     mean_dbp = fields.Integer(validate=validate.Range(min=0, max=500), default=80)
     max_dbp = fields.Integer(validate=validate.Range(min=0, max=500), default=80)
     min_dbp = fields.Integer(validate=validate.Range(min=0, max=500), default=80)
@@ -38,6 +72,7 @@ class ParamSchema(Schema):
     creatinine = fields.Float(validate=validate.Range(min=0), default=1.2)
     ah = fields.Boolean(default=False)
     ah_stage = fields.Integer(validate=validate.Range(min=1, max=3), default=2)
+    ah_type = fields.Integer(validate=validate.Range(min=1, max=2), default=1)
     fbs = fields.Float(validate=validate.Range(min=0.0), default=5.0)
     gtt = fields.Boolean(default=False)
     total_cholesterol = fields.Float(validate=validate.Range(min=0.0), default=3.0)
@@ -60,4 +95,3 @@ class ParamSchema(Schema):
     left_ventricular_ejection_fraction = fields.Float(validate=validate.Range(min=0.0), default=57.0)
     left_ventricular_hypertrophy = fields.Boolean(default=False)
     left_atrial_expansion = fields.Boolean(default=False)
-

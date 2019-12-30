@@ -55,3 +55,30 @@ blood_group,Группа крови,1
 left_ventricular_ejection_fraction,Фракция выброса ЛЖ,57
 left_ventricular_hypertrophy,Гипертрофия ЛЖ,False
 left_atrial_expansion,Расширение ЛП,False
+LYM_blood_level,LYM (анализ крови),30.16
+MCV_blood_level,MCV (анализ крови),88.5
+MPW_blood_level,MPW (анализ крови),8.8
+NEUT_blood_level,NEUT (анализ крови),57.9
+PCT_blood_level,PCT (анализ крови),0.19
+PDW_blood_level,PDW (анализ крови),16.2
+PLT_blood_level, PLT (анализ крови),226
+RDW_blood_level, RDW (анализ крови),12.7
+S_G_level, S.G. (анализ мочи),12.75
+pH_blood_level, pH (анализ крови),5.7
+ALT_level, АЛТ (анализ крови),23.17
+HCT_blood_level, HCT (анализ крови),41.2
+HGB_blood_level, HGB (анализ крови),138
+LUM_blood_level, LUM (анализ крови),2.03
+MCH_blood_level, MCH (анализ крови),29.7
+WBC_blood_level, WBC (анализ крови),7
+ACT_blood_level, ACT (анализ крови),21.73
+bilirubin_level, Билирубин (анализ крови),12
+troponin_level, Тропонин (анализ крови),0.08
+glucose_level, Глюкоза (анализ крови),5.6
+E06_3_mkb, Аутоиммунный тиреоидит (E06.3) в анамнезе,False
+I48_mkb, Фибрилляция и трепетание предсердий (I48) в анамнезе,False
+I65_2_mkb, Закупорка и стеноз сонной артерии (I65.2) в анамнезе,False
+I67_2_mkb, Цереброваскулярные болезни (I67) в анамнезе,False
+M42_1_mkb, Остеохондроз позвоночника у взрослых (M42.1) в анамнезе,False
+I50_mkb, Сердечная недостаточность (I50) в анамнезе,False
+ah_type, тип АГ (1/2 - первичная/вторичная),1

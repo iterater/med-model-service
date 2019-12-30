@@ -1,0 +1,13 @@
+ah_type
+sex
+height
+weight
+smoking
+alcohol_regularity
+creatinine_level
+effusions
+arrhythmia
+stenocardia
+max_sbp
+mean_sbp
+age
