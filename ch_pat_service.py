@@ -1,9 +1,6 @@
 from flask import Flask, request, jsonify, render_template
 from flask_cors import CORS, cross_origin
 
-import os
-os.chdir(r'C:\__WORK\Projects_AH\extra_modules\full_project\chronic-patient-model-service')
-
 import ch_pat_models_management
 
 models = ch_pat_models_management.load_models('models')
@@ -37,5 +34,5 @@ def main_ui():
 
 
 if __name__ == '__main__':
-    # app.run(host='0.0.0.0', port=5000, debug=True, use_reloader=False)
-    app.run(host='localhost', port=5000, debug=True, use_reloader=False)
+    app.run(host='0.0.0.0', port=5000, debug=True, use_reloader=False)
+    # app.run(host='localhost', port=5000, debug=True, use_reloader=False)
