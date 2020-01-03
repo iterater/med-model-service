@@ -4,6 +4,7 @@ import os
 import pandas as pd
 import datetime as dt
 from ch_pat_param_schema import ParamSchema
+from experimental_run_suppl import get_kb_stats
 
 # logging setup
 # os.chdir(r'C:\__WORK\Projects_AH\chronic-patient-model-service-colored')
@@ -24,6 +25,7 @@ logger.addHandler(fh)
 def load_models(basic_model_path):
     '''Load pckled models from dir'''    
     models = []
+    loaded_f_names = []
     for fn in os.listdir(basic_model_path):
         if not fn.endswith('.pkl'):
             continue
@@ -31,9 +33,13 @@ def load_models(basic_model_path):
             m = pickle.load(open(os.path.join(basic_model_path, fn), 'br'))
             logger.info('Loading model: {0}'.format(m.model_description))
             models.append(m)
+            loaded_f_names.append(fn)
         except Exception as e:
             logger.error('Pickle \'{0}\' loading failed with exception {1}'.format(fn, e))
-        
+    logger.info('{0} models loaded'.format(len(loaded_f_names)))
+    kb_stats = get_kb_stats(loaded_f_names)
+    for k,v in kb_stats.items():
+        logger.info('Knowledge base \'{}\' loaded with {} models ({})'.format(k, len(v), ', '.join(v)))
     return models
 
 
@@ -41,6 +47,7 @@ def call_models(data, models):
     '''Call available models'''
     logger.info('Input: {0}'.format(data))
     errors = validate_data(data)
+    counter = 0
     if len(errors) > 0:
         logger.error('Termination with {0} errors in input data'.format(len(errors)))
         data['errors'] = errors
@@ -59,9 +66,11 @@ def call_models(data, models):
                 try:
                     data = m.apply(data)
                     logger.info('Applied model: {0}'.format(m.model_description))
+                    counter += 1
                 except Exception as e:
                     logger.error('Model \'{0}\' crashed with exception {1}'.format(m.model_description, e))
     data['errors'] = dict()
+    logger.info('{0} models applied'.format(counter))
     logger.info('Output: {0}'.format(data))
     return data
 
