@@ -53,3 +53,8 @@ flask run --host=0.0.0.0 &
 ```bash
 killall flask
 ```
+
+Запуск с использованием GUnicorn:
+```bash
+gunicorn ch_pat_service:app -b 0.0.0.0:5000 -w 2 &
+```

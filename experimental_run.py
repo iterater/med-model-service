@@ -13,15 +13,17 @@ def request():
     return resp.status_code == 200
 
 def single_series(n, i):
-    print('Run {} with {} requests'.format(i, n))
+    # print('Run {} with {} requests'.format(i, n))
     t = timeit.timeit(request, number=n)
     return t
 
 if __name__ == '__main__':
+    n_package = 16
+    print('N_P;T;{}'.format(';'.join(['TP_' + str(i+1) for i in range(n_package)])))
     for n_par in range(1,7):
         start_date_time = datetime.datetime.now()
         run_res = joblib.Parallel(n_jobs=n_par)(joblib.delayed(single_series)(100, i) for i in range(16))
         stop_date_time = datetime.datetime.now()        
         dt = (stop_date_time - start_date_time) / datetime.timedelta(milliseconds=1)
-        print('{}, {}, {}'.format(n_par, dt, ', '.join(run_res)))
+        print('{}; {}; {}'.format(n_par, dt, '; '.join([str(r) for r in run_res])))
 
