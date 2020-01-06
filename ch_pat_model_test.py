@@ -48,6 +48,8 @@ test_model = model_other_dias_prediction.M42_1Model()
 test_model.store_model('models\\M42_1Model.pkl')
 test_model = model_other_dias_prediction.AcuteHeartAttackModel()
 test_model.store_model('models\\AcuteHeartAttackModel.pkl')
+test_model = model_risk_AF_thyrotoxicosis.AFPrediction()
+test_model.store_model('models\\risk_AF_TT.pkl')
 # Test 2: running flask app
 # import requests
 # url = 'http://localhost:5000/ch_pat_service'
