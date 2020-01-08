@@ -9,8 +9,9 @@ import model_chf_trans_heart
 import model_chf_strokes
 import model_chf_takhikardia
 import model_other_dias_prediction
+import model_ah_treatment
 
-#import pickle
+# import pickle
 
 test_model = model_ah_state.StateAHModel()
 test_model.store_model('models\\ah_state_classifier_model.pkl')
@@ -56,3 +57,29 @@ test_model.store_model('models\\risk_AF_TT.pkl')
 # url = 'http://195.222.181.179:5000/ch_pat_service'
 # r = requests.post(url,json={'icd10':'I10','max_sbp':160})
 # print(r.json())
+
+# therapy models
+m = model_ah_treatment.AhTreatmentDecisionTreeModel(
+    'HypertensivePatientTreatmentModel\\Treatment_ARB.pkl', 
+    'AH treatment with ARB', 'антагонисты рецепторов к ангиотензину II')
+m.store_model('models\\ah_treatment_arb.pkl')
+
+m = model_ah_treatment.AhTreatmentDecisionTreeModel(
+    'HypertensivePatientTreatmentModel\\Treatment_BB.pkl', 
+    'AH treatment with BB', 'бета-блокаторы')
+m.store_model('models\\ah_treatment_bb.pkl')
+
+m = model_ah_treatment.AhTreatmentDecisionTreeModel(
+    'HypertensivePatientTreatmentModel\\Treatment_CaCB.pkl', 
+    'AH treatment with CaCB', 'антагонисты кальция')
+m.store_model('models\\ah_treatment_cacb.pkl')
+
+m = model_ah_treatment.AhTreatmentDecisionTreeModel(
+    'HypertensivePatientTreatmentModel\\Treatment_D.pkl', 
+    'AH treatment with D', 'диуретики')
+m.store_model('models\\ah_treatment_d.pkl')
+
+m = model_ah_treatment.AhTreatmentDecisionTreeModel(
+    'HypertensivePatientTreatmentModel\\Treatment_iACE.pkl', 
+    'AH treatment with iACE', 'ингибиторы АПФ')
+m.store_model('models\\ah_treatment_iace.pkl')

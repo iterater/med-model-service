@@ -130,4 +130,9 @@ class ParamSchema(Schema):
     i209 = fields.Integer(validate=validate.Range(min=0, max=1), default=0)
     i420 = fields.Integer(validate=validate.Range(min=0, max=1), default=0)
 
-
+    last_sbp = fields.Integer(validate=validate.Range(min=0, max=500), default=160)
+    last_dbp = fields.Integer(validate=validate.Range(min=0, max=500), default=90)
+    hereditary = fields.Boolean(default=False)
+    dyslipidemia = fields.Boolean(default=True)
+    igt = fields.Boolean(default=True)
+    chf_dia = fields.Boolean(default=True)
