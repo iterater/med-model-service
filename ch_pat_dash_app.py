@@ -5,6 +5,7 @@ from dash.dependencies import Input, Output
 import dash_bootstrap_components as dbc
 import ch_pat_models_management
 import json
+import re
 
 models = ch_pat_models_management.load_models('models')
 params = ch_pat_models_management.load_params('params_list.csv')
@@ -44,6 +45,22 @@ def build_all_errors(errors):
     return html.Div([html.H3('Errors')] + [html.Div(e_to_html(e), style=e_style) for e in errors])
 
 
+def biud_all_rec(rec_string):
+    r_style_rec = {'background-color': 'aquamarine',
+                   'margin': '10px',
+                   'padding': '5px'}
+    r_style_no_rec = {'background-color': 'aquamarine',
+                   'margin': '10px',
+                   'padding': '5px'}    
+    r_parts_rec = re.findall('Рекомендована терапия: ([^.]*)\\.', rec_string)
+    r_parts_no_rec = re.findall('Не рекомендована терапия: ([^.]*)\\.', rec_string)
+    rec_to_html_rec = lambda s: [html.B('Рекомендовано'),  html.P(s, style={'font-size': '70%'})]
+    rec_to_html_no_rec = lambda s: [html.B('Не рекомендовано'),  html.P(s, style={'font-size': '70%'})]
+    return html.Div([html.H3('Сформированные рекомендации')] + 
+                    [html.Div(rec_to_html_rec(s), style=r_style_rec) for s in r_parts_rec] + 
+                    [html.Div(rec_to_html_no_rec(s), style=r_style_no_rec) for s in r_parts_no_rec])
+
+
 @app.callback(Output('output_div', 'children'), [Input('call_button', 'n_clicks'), Input('input_from', 'children')])
 def data_process_callback(n, input_form_content):
     input_to_tuple = lambda i: (i['props']['id'], i['props']['value'])
@@ -58,6 +75,8 @@ def data_process_callback(n, input_form_content):
             content.append(build_all_states(out_dict['states']))
         if ('errors' in out_dict) and (len(out_dict['errors']) > 0):
             content.append(build_all_errors(out_dict['errors'].items()))
+        if ('recommendations' in out_dict):
+            content.append(biud_all_rec(out_dict['recommendations']))
         return html.Div(content)
 
 
