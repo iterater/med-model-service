@@ -1,8 +1,8 @@
 id,label,default
 icd10,МКБ-10,I10
 sex,Пол (male/female),female
-age,Возраст,55
-bmi,Индекс массы тела,26.18
+age,Возраст,59
+bmi,Индекс массы тела,31.22
 last_sbp,САД (на приеме),160
 last_dbp,ДАД (на приеме),90
 smoking,Статус курения,False
@@ -14,4 +14,4 @@ left_ventricular_hypertrophy,Гипертрофия ЛЖ,False
 microalbuminuria,Микроальбуминурия (есть/нет),False
 chronic_kidney_disease, Стадия ХБП (0 - если нет),0
 chf_dia,Хроническая сердечная недостаточность (ХСН) в диагнозе,True
-coronary_heart_disease,Ишемическая болезнь сердца,False
+coronary_heart_disease,Ишемическая болезнь сердца,True

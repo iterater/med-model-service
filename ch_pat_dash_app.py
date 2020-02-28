@@ -49,16 +49,15 @@ def biud_all_rec(rec_string):
     r_style_rec = {'background-color': 'aquamarine',
                    'margin': '10px',
                    'padding': '5px'}
-    r_style_no_rec = {'background-color': 'aquamarine',
+    r_style_no_rec = {'background-color': 'salmon',
                    'margin': '10px',
                    'padding': '5px'}    
     r_parts_rec = re.findall('Рекомендована терапия: ([^.]*)\\.', rec_string)
     r_parts_no_rec = re.findall('Не рекомендована терапия: ([^.]*)\\.', rec_string)
-    rec_to_html_rec = lambda s: [html.B('Рекомендовано'),  html.P(s, style={'font-size': '70%'})]
-    rec_to_html_no_rec = lambda s: [html.B('Не рекомендовано'),  html.P(s, style={'font-size': '70%'})]
+    rec_to_html = lambda s, titl: [html.B(titl),  html.P(s, style={'font-size': '70%'})]
     return html.Div([html.H3('Сформированные рекомендации')] + 
-                    [html.Div(rec_to_html_rec(s), style=r_style_rec) for s in r_parts_rec] + 
-                    [html.Div(rec_to_html_no_rec(s), style=r_style_no_rec) for s in r_parts_no_rec])
+                    [html.Div(rec_to_html(s, 'Рекомендовано'), style=r_style_rec) for s in r_parts_rec] + 
+                    [html.Div(rec_to_html(s, 'Не рекомендовано'), style=r_style_no_rec) for s in r_parts_no_rec])
 
 
 @app.callback(Output('output_div', 'children'), [Input('call_button', 'n_clicks'), Input('input_from', 'children')])
@@ -85,4 +84,4 @@ app.layout = dbc.Container([dbc.Row([
     dbc.Col([html.H2('Output'), html.Div(id='output_div', children=[])])])])
 
 if __name__ == '__main__':
-    app.run_server(debug=True, use_reloader=False)
+    app.run_server(host='0.0.0.0', debug=True, use_reloader=False)
