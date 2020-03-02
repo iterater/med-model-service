@@ -18,12 +18,12 @@ def call_form():
     par_to_fg = lambda par: dbc.FormGroup([dbc.Label(par['label']),
                                            dbc.Input(id=par['id'], value=par['default'])])
     form_seq = [par_to_fg(par) for par in params]
-    return dbc.Form([html.H2('Params')] + form_seq + [dbc.Button("Call", id="call_button")], id='input_from')
+    return dbc.Form([html.H2('Параметры')] + form_seq + [dbc.Button("Запуск", id="call_button")], id='input_from')
 
 
 def loaded_models():
     list_seq = [html.Li(m.model_description) for m in models]
-    return html.Div([html.H2('Loaded models'), html.Ul(list_seq)])
+    return html.Div([html.H2('Загружены модели'), html.Ul(list_seq)])
 
 
 def build_all_states(states):
@@ -81,7 +81,7 @@ def data_process_callback(n, input_form_content):
 
 app.layout = dbc.Container([dbc.Row([
     dbc.Col([call_form(), html.Br(), loaded_models()]),
-    dbc.Col([html.H2('Output'), html.Div(id='output_div', children=[])])])])
+    dbc.Col([html.H2('Результат'), html.Div(id='output_div', children=[])])])])
 
 if __name__ == '__main__':
     app.run_server(host='0.0.0.0', debug=True, use_reloader=False)
